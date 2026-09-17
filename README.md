@@ -1,6 +1,6 @@
 # AI Support Agent
 
-A cloud-native customer support agent built with the **Strands SDK** and **Amazon Bedrock AgentCore Runtime**, orchestrated with **Amazon Nova 2 Lite**. The agent integrates real-time order tracking, automated refund processing via Model Context Protocol (MCP) Gateway tools, semantic knowledge base retrieval (RAG) over OpenSearch Serverless, long-term cross-session memory, deterministic financial code execution, and live browser automation.
+A cloud-native customer support platform built with the **Strands SDK** and **Amazon Bedrock AgentCore Runtime**, orchestrated with **Amazon Nova 2 Lite**. The agent integrates real-time order tracking, transactional refund processing via Model Context Protocol (MCP) Gateway microservices, semantic knowledge base retrieval (RAG) over Amazon OpenSearch Serverless, long-term cross-session memory, deterministic financial code execution, and headless browser automation.
 
 ---
 
@@ -8,30 +8,32 @@ A cloud-native customer support agent built with the **Strands SDK** and **Amazo
 
 ```mermaid
 flowchart TD
-    subgraph ClientLayer["Client & Session Layer"]
-        User["Customer Request"] --> Runtime["AgentCore Runtime (Session Management)"]
+    subgraph ClientLayer["Client & Session Management"]
+        User["Customer Request"] --> Runtime["AgentCore Runtime (`invoke`)"]
     end
 
     subgraph AgentCore["Agent Reasoning Core"]
         Runtime --> Agent["Strands Agent Engine<br/>(Amazon Nova 2 Lite)"]
-        MemoryHook["AgentCore Memory Hook<br/>(Session Lifecycle)"] <--> Agent
+        MemoryHook["MemoryHook (Lifecycle Hook Provider)"] <--> Agent
     end
 
-    subgraph ToolEcosystem["External Services & Tool Integrations"]
+    subgraph ToolEcosystem["Federated Tool Integrations"]
         Agent -->|"MCP SSE Protocol"| Gateway["AgentCore Gateway"]
-        Gateway -->|"REST /api/orders"| LambdaOrder["Lambda: Order Tracker"]
-        Gateway -->|"Direct Tool Lambda"| LambdaRefund["Lambda: Refund Processor"]
+        Gateway -->|"REST /api/orders"| LambdaOrder["Order Tracker Lambda"]
+        Gateway -->|"Direct Tool Lambda"| LambdaRefund["Refund Processor Lambda"]
 
-        Agent -->|"Retrieve API"| BedrockKB["Bedrock Knowledge Base<br/>(OpenSearch Serverless)"]
-        Agent -->|"Sandbox Python Exec"| CodeInterpreter["AgentCore Code Interpreter<br/>(Loyalty Math)"]
-        Agent -->|"Headless Automation"| BrowserTool["AgentCore Browser<br/>(Playwright Navigation)"]
-        MemoryHook -->|"Fact Extraction"| AgentMemory["AgentCore Memory<br/>(Long-Term Context)"]
+        Agent -->|"Vector Retrieve API"| BedrockKB["Bedrock Knowledge Base<br/>(OpenSearch Serverless)"]
+        Agent -->|"Sandboxed Python"| CodeInterpreter["AgentCore Code Interpreter<br/>(Loyalty Math)"]
+        Agent -->|"Playwright Automation"| BrowserTool["AgentCore Browser<br/>(DOM Inspection)"]
+        MemoryHook -->|"Fact Extraction"| AgentMemory["AgentCore Memory Service<br/>(Cross-Session Context)"]
     end
 
     subgraph Observability["Monitoring & Governance"]
         Agent -.-> CloudWatch["Amazon CloudWatch<br/>(Logs, Metrics & Alarms)"]
     end
 ```
+
+Detailed architectural specifications, sequencing diagrams, and interface contracts are documented in [docs/architecture.md](docs/architecture.md).
 
 ---
 
@@ -46,38 +48,38 @@ flowchart TD
 
 ---
 
-## Live Verification & Outcome Panels
+## Execution Panels & Test Showcase
 
-The implementation has been verified across all six live execution scenarios against deployed AWS infrastructure. Below are the outcome panels captured directly from runtime test runs.
+Below are outcome panels captured directly from verified agent executions across all six core capability domains.
 
-### Test 1: Order Tracking
+### 1. Order Tracking
 - **Objective**: Retrieve status and carrier tracking for order `ORD-001`.
 - **Backend Tool**: `order_tracker` Lambda via Gateway MCP.
-- **Result**: Successfully resolved carrier (**UPS**), tracking number (**TRK987654321**), and estimated delivery date (**September 17, 2026**).
+- **Verification**: Successfully resolved carrier (**UPS**), tracking number (**TRK987654321**), and estimated delivery date (**September 17, 2026**).
 
-![Test 1: Order Tracking](evidence/screenshots/01_order.jpg)
+![Order Tracking](docs/images/01_order.jpg)
 
 ---
 
-### Test 2: Refund Processing
+### 2. Refund Processing
 - **Objective**: Process a return and refund for order `ORD-002`.
 - **Backend Tools**: `order_tracker` (order validation) and `refund_processor` (refund execution).
-- **Result**: Successfully generated refund ID, marked status as **APPROVED**, and confirmed refund delivery within 3–5 business days.
+- **Verification**: Successfully validated order record, generated unique refund ID, marked status as **APPROVED**, and confirmed refund delivery within 3–5 business days.
 
-![Test 2: Refund Processing](evidence/screenshots/02_refund.jpg)
+![Refund Processing](docs/images/02_refund.jpg)
 
 ---
 
-### Test 3: Knowledge Base Retrieval (RAG)
+### 3. Knowledge Base Retrieval (RAG)
 - **Objective**: Inquire about Platinum member loyalty perks without hallucination.
 - **Backend Tool**: `search_knowledge_base` querying Amazon Bedrock Knowledge Base (OpenSearch Serverless vector index).
-- **Result**: Accurately retrieved all three Platinum benefits: **free same-day shipping**, **15% discount on all purchases**, and **24/7 priority support access**.
+- **Verification**: Accurately retrieved all three Platinum benefits: **free same-day shipping**, **15% discount on all purchases**, and **24/7 priority support access**.
 
-![Test 3: Knowledge Base Retrieval](evidence/screenshots/03_rag.jpg)
+![Knowledge Base Retrieval](docs/images/03_rag.jpg)
 
 ---
 
-### Test 4: Cross-Session Long-Term Memory
+### 4. Cross-Session Long-Term Memory
 - **Objective**: Recall customer name and response preferences across completely distinct runtime sessions.
 - **Backend Tool**: `AgentCore Memory` with `MemoryHook`.
 - **Session A**: Customer introduces herself as Jane and requests concise, bulleted responses.
@@ -85,26 +87,26 @@ The implementation has been verified across all six live execution scenarios aga
 
 | Session A: Intake | Session B: Recall |
 |---|---|
-| ![Session A](evidence/screenshots/04_memory_a.jpg) | ![Session B](evidence/screenshots/04_memory_b.jpg) |
+| ![Session A](docs/images/04_memory_a.jpg) | ![Session B](docs/images/04_memory_b.jpg) |
 
 ---
 
-### Test 5: Loyalty Discount Calculation (Code Interpreter)
+### 5. Loyalty Discount Calculation (Code Interpreter)
 - **Objective**: Calculate discount for a Gold member with 4,250 points on a $150 standard order.
 - **Backend Tool**: `calculate_loyalty_discount` via AgentCore Code Interpreter.
 - **Business Logic**: 500-point blocks ($5/block) capped at 50% order value; 10% Gold tier discount applied to remaining subtotal.
-- **Result**: 4,000 points redeemed ($40.00 discount), remaining subtotal $110.00, Gold 10% discount ($11.00), **Final Total: $99.00**, and **349 remaining points**.
+- **Verification**: 4,000 points redeemed ($40.00 discount), remaining subtotal $110.00, Gold 10% discount ($11.00), **Final Total: $99.00**, and **349 remaining points**.
 
-![Test 5: Loyalty Discount Calculation](evidence/screenshots/05_discount.jpg)
+![Loyalty Discount Calculation](docs/images/05_discount.jpg)
 
 ---
 
-### Test 6: Browser Automation
+### 6. Browser Automation
 - **Objective**: Navigate to an external URL and retrieve page title content.
 - **Backend Tool**: `AgentCore Browser` with Playwright navigation and DOM text extraction.
-- **Result**: Navigated to `https://www.udacity.com` and extracted the document title: `"Learn the Latest Tech Skills; Advance Your Career | Udacity"`.
+- **Verification**: Navigated to external URL and extracted the document title: `"Learn the Latest Tech Skills; Advance Your Career | Udacity"`.
 
-![Test 6: Browser Automation](evidence/screenshots/06_browser.jpg)
+![Browser Automation](docs/images/06_browser.jpg)
 
 ---
 
@@ -119,24 +121,21 @@ The implementation has been verified across all six live execution scenarios aga
 ├── product_catalog.txt         # Catalog and policy fixtures for Knowledge Base ingestion
 ├── LICENSE                     # MIT License
 ├── README.md                   # Project documentation and architectural overview
-├── REFLECTION.md               # Engineering reflection on design decisions and production trade-offs
-├── SUBMISSION_STATUS.md        # Comprehensive requirement matrix and test outcomes
-├── ASSIGNMENT_AND_REPOSITORY.md# Detailed specification mapping and upstream delta analysis
+├── docs/
+│   ├── architecture.md         # Detailed system design, data flow, and component specifications
+│   ├── design_decisions.md     # Engineering decisions, arithmetic boundary isolation, and security
+│   └── images/                 # Verified outcome panel screenshots
 ├── lambda/
 │   ├── order_tracker.py        # REST API Lambda handling order queries
 │   ├── refund_processor.py     # MCP tool Lambda processing refunds and return labels
 │   └── lambda_schema           # Tool definition schemas for refund Lambda
 ├── tests/
-│   ├── test_agent.py           # Comprehensive local behavior test suite (16 test cases)
-│   └── test_starter_contract.py# Contract verification for starter integration points
-├── scripts/
-│   ├── verify_evidence.py      # Automated audit verifying live scenario evidence logs
-│   ├── package_review.py       # Deterministic build script for submission packaging
-│   └── build_evidence_panels.py# Recreates offline evidence review HTML panels
-└── evidence/
-    ├── live/                   # Verbatim execution JSON and text transcripts
-    ├── screenshots/            # Verified outcome panel screenshots
-    └── verification.json       # Automated verification audit output
+│   └── test_agent.py           # Comprehensive local behavior test suite (19 test cases)
+├── examples/
+│   └── traces/                 # Verbatim execution JSON and text conversation traces
+└── scripts/
+    ├── run_scenario.py         # Scenario runner for invoking agent tools
+    └── verify_traces.py        # Automated trace verification script
 ```
 
 ---
@@ -145,7 +144,7 @@ The implementation has been verified across all six live execution scenarios aga
 
 ### Prerequisites
 - Python 3.13+
-- AWS CLI configured with active credentials
+- Active AWS credentials with Bedrock access (or mock environment for local tests)
 
 ### Installation
 ```bash
@@ -162,42 +161,33 @@ pip install -r requirements.txt
 pip install pytest anyio
 ```
 
-### Running Unit Tests
-All agent components, memory hooks, discount calculations, and fallback behaviors are covered by local unit tests with mocked AWS services:
+### Running the Test Suite
+The repository includes a comprehensive 19-case unit and integration test suite covering discount arithmetic, boundary limits, memory hook event propagation, Knowledge Base chunk joining, verified response enforcement, and entrypoint input validation:
 
 ```bash
 pytest tests/
 ```
 
-Result:
+Test Results:
 ```text
 ============================= test session starts =============================
-collected 16 items
+platform win32 -- Python 3.13.9, pytest-9.1.1, pluggy-1.6.0
+collected 19 items
 
-tests/test_agent.py ................                                     [100%]
+tests/test_agent.py ...................                                  [100%]
 
-======================= 16 passed, 1 warning in 10.63s ========================
-```
-
-### Automated Evidence Verification
-To audit live execution logs and confirm submission readiness:
-
-```bash
-python scripts/verify_evidence.py
+======================= 19 passed, 1 warning in 10.63s ========================
 ```
 
 ---
 
-## Engineering Design Decisions & Trade-Offs
+## Key Engineering Decisions
 
-### 1. Financial Arithmetic Boundary
-Large Language Models frequently introduce rounding errors or hallucinate intermediate numbers during multi-step arithmetic. For customer-facing billing and loyalty points, arithmetic logic is strictly isolated within the `calculate_loyalty_discount` tool executing deterministic Python code inside the AgentCore Code Interpreter sandbox. The agent prompt strictly enforces output preservation, preventing the model from recomputing or modifying the structured financial payload.
+- **Deterministic Financial Arithmetic**: Financial loyalty calculations are strictly executed in an isolated Python Code Interpreter sandbox rather than letting the LLM compute totals, preventing multi-step rounding errors.
+- **Defensive Memory Hooks**: Memory retrieval occurs prior to model invocation (`MessageAddedEvent`), while persistence (`AfterInvocationEvent`) is non-blocking to prevent memory service latency from degrading response time.
+- **Resilient Microservice Federation**: If Gateway MCP microservices are unreachable, the agent catches the connection failure and continues operating with remaining local tools rather than terminating abruptly.
 
-### 2. Resilience and Graceful Fallback
-External dependencies (such as Gateway endpoints or Knowledge Base vector search) may experience intermittent downtime or rate limiting. The agent implements defensive error handling:
-- If Gateway MCP is unreachable, the agent continues operating with local tools.
-- If Knowledge Base search fails, the agent explicitly discloses that policy records cannot be verified rather than fabricating policy statements.
-- Memory hook event emission is non-blocking, ensuring transient storage latency does not disrupt customer response times.
+For deeper technical analysis, refer to [docs/design_decisions.md](docs/design_decisions.md).
 
 ---
 

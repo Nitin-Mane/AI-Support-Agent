@@ -1,6 +1,6 @@
 {
   "REGION": "us-east-1",
-  "GATEWAY_URL": "https://customersupportgatewayp02-2n6q5fdzbt.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+  "GATEWAY_URL": "",
   "KB_ID": "",
-  "MEMORY_ID": "CustomerSupportMemoryP02-ERJcTe4B5I"
+  "MEMORY_ID": "CustomerSupportMemory"
 }

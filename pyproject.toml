@@ -1,8 +1,8 @@
 [project]
-name = "customer-support-agent"
+name = "ai-support-agent"
 version = "1.0.0"
-description = "Customer support agent using Amazon Bedrock AgentCore and Strands"
-requires-python = ">=3.13,<3.14"
+description = "Cloud-native customer support agent using Amazon Bedrock AgentCore and Strands SDK"
+requires-python = ">=3.13"
 dependencies = [
   "bedrock-agentcore==1.23.0",
   "strands-agents==1.55.1",
@@ -14,7 +14,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest==9.1.1", "bedrock-agentcore-starter-toolkit==0.3.12"]
+dev = [
+  "pytest==9.1.1",
+  "anyio>=4.0.0"
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

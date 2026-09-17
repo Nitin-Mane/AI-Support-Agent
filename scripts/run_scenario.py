@@ -1,155 +1,130 @@
-"""Capture a real `agentcore invoke` transcript for one classroom scenario."""
+"""Scenario runner for evaluating customer support agent capabilities."""
 
+import argparse
+import asyncio
 import json
 import os
-from pathlib import Path
-import subprocess
 import sys
 import uuid
-import boto3
-import yaml
 from datetime import datetime, timezone
+from pathlib import Path
+
+import boto3
 
 ROOT = Path(__file__).resolve().parents[1]
-scenarios = {
-    "01_order": {
+
+SCENARIOS = {
+    "order": {
         "prompt": "Can you track order ORD-001?",
         "customer_id": "CUST-123",
-        "session_id": "t1",
+        "session_id": "eval-order-1",
     },
-    "02_refund": {
+    "refund": {
         "prompt": "I want to return my Kindle Paperwhite (ORD-002). Please initiate a refund.",
         "customer_id": "CUST-123",
-        "session_id": "t2",
+        "session_id": "eval-refund-1",
     },
-    "03_rag": {
+    "rag": {
         "prompt": "What are the benefits of the Platinum loyalty tier?",
         "customer_id": "CUST-123",
-        "session_id": "t3",
+        "session_id": "eval-rag-1",
     },
-    "04_memory_a": {
+    "memory_a": {
         "prompt": "Hi, I am Jane. I prefer concise responses.",
         "customer_id": "CUST-123",
-        "session_id": "s-A",
+        "session_id": "eval-mem-a",
     },
-    "04_memory_b": {
+    "memory_b": {
         "prompt": "Do you remember my name and communication preference?",
         "customer_id": "CUST-123",
-        "session_id": "s-B",
+        "session_id": "eval-mem-b",
     },
-    "05_discount": {
+    "discount": {
         "prompt": "I am a Gold member with 4250 points. Calculate my discount on a $150 standard order.",
         "customer_id": "CUST-123",
-        "session_id": "t5",
+        "session_id": "eval-discount-1",
     },
-    "06_browser": {
+    "browser": {
         "prompt": "Go to https://www.udacity.com and tell me the page title.",
         "customer_id": "CUST-123",
-        "session_id": "t6",
+        "session_id": "eval-browser-1",
     },
 }
-name = sys.argv[1]
-payload = scenarios[name]
-if "--raw" in sys.argv:
-    credentials = json.loads((ROOT / ".local/sandbox_credentials.json").read_text())
-    session = boto3.Session(region_name="us-east-1", **credentials)
-    configuration = yaml.safe_load(
-        (ROOT / "deployment/.bedrock_agentcore.yaml").read_text()
-    )
-    arn = configuration["agents"]["udacity_support_p02"]["bedrock_agentcore"][
-        "agent_arn"
-    ]
+
+
+async def run_local(scenario_key: str):
+    """Run scenario locally through the main module entrypoint."""
+    sys.path.insert(0, str(ROOT))
+    import main
+
+    payload = SCENARIOS[scenario_key]
+    print(f"Executing scenario '{scenario_key}' locally...")
+    print(f"Prompt: {payload['prompt']}")
+    result = await main.invoke(payload)
+    print("\nResponse:")
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+
+def run_remote(scenario_key: str, runtime_arn: str, region: str = "us-east-1"):
+    """Invoke deployed AgentCore Runtime via boto3."""
+    session = boto3.Session(region_name=region)
+    client = session.client("bedrock-agentcore")
+    payload = SCENARIOS[scenario_key]
     runtime_session = str(uuid.uuid4())
-    started = datetime.now(timezone.utc).isoformat()
-    response = session.client("bedrock-agentcore").invoke_agent_runtime(
-        agentRuntimeArn=arn,
+
+    print(f"Invoking runtime {runtime_arn} for scenario '{scenario_key}'...")
+    response = client.invoke_agent_runtime(
+        agentRuntimeArn=runtime_arn,
         runtimeSessionId=runtime_session,
-        payload=json.dumps(payload).encode(),
+        payload=json.dumps(payload).encode("utf-8"),
         contentType="application/json",
         accept="application/json",
     )
-    body = response["response"].read().decode()
+    body = response["response"].read().decode("utf-8")
     try:
         body = json.loads(body)
     except json.JSONDecodeError:
         pass
+
     record = {
-        "started_utc": started,
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "scenario": scenario_key,
+        "runtime_arn": runtime_arn,
         "runtime_session_id": runtime_session,
-        "runtime_arn": arn,
         "input": payload,
         "http_status": response["ResponseMetadata"]["HTTPStatusCode"],
         "output": body,
     }
-    folder = ROOT / "evidence/live"
-    folder.mkdir(parents=True, exist_ok=True)
-    path = folder / (name + ".json")
-    if path.exists():
-        path.rename(
-            path.with_name(
-                name
-                + "_"
-                + datetime.now(timezone.utc).strftime("%H%M%S")
-                + "_previous.json"
-            )
-        )
-    path.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(
-        json.dumps(
-            {
-                "file": str(path),
-                "http_status": record["http_status"],
-                "output": {k: v for k, v in body.items() if k != "messages"}
-                if isinstance(body, dict)
-                else body,
-            },
-            indent=2,
-            ensure_ascii=False,
-        )
+    print(json.dumps(record, indent=2, ensure_ascii=False))
+
+
+def main_cli():
+    parser = argparse.ArgumentParser(description="Evaluate agent scenarios")
+    parser.add_argument(
+        "scenario",
+        choices=list(SCENARIOS.keys()) + ["all"],
+        help="Scenario identifier to execute",
     )
-    sys.exit(1 if isinstance(body, dict) and body.get("error") else 0)
-env = os.environ.copy()
-env.update(
-    {
-        k.upper(): v
-        for k, v in json.loads(
-            (ROOT / ".local/sandbox_credentials.json").read_text()
-        ).items()
-    }
-)
-env.update(
-    AWS_DEFAULT_REGION="us-east-1",
-    AWS_REGION="us-east-1",
-    PYTHONUTF8="1",
-    PYTHONIOENCODING="utf-8",
-    AGENTCORE_SUPPRESS_RECOMMENDATION="1",
-    NO_COLOR="1",
-    COLUMNS="160",
-)
-cli = ROOT / ".venv/Scripts/agentcore.exe"
-command = [str(cli), "invoke", json.dumps(payload)]
-started = datetime.now(timezone.utc).isoformat()
-result = subprocess.run(
-    command,
-    cwd=ROOT / "deployment",
-    env=env,
-    capture_output=True,
-    encoding="utf-8",
-    errors="replace",
-    timeout=600,
-)
-transcript = f"Started UTC: {started}\nCommand: agentcore invoke {
-    json.dumps(payload)
-}\nExit code: {result.returncode}\n\nSTDOUT\n{result.stdout}\nSTDERR\n{result.stderr}"
-folder = ROOT / "evidence/live"
-folder.mkdir(parents=True, exist_ok=True)
-path = folder / (name + ".txt")
-if path.exists():
-    path.rename(
-        path.with_name(
-            name + "_" + datetime.now(timezone.utc).strftime("%H%M%S") + "_previous.txt"
-        )
+    parser.add_argument(
+        "--runtime-arn",
+        default=os.getenv("AGENT_RUNTIME_ARN"),
+        help="AgentCore Runtime ARN for remote invocation",
     )
-path.write_text(transcript, encoding="utf-8")
-print(transcript)
-sys.exit(result.returncode)
+    parser.add_argument(
+        "--region",
+        default=os.getenv("AWS_REGION", "us-east-1"),
+        help="AWS region (default: us-east-1)",
+    )
+    args = parser.parse_args()
+
+    scenarios = list(SCENARIOS.keys()) if args.scenario == "all" else [args.scenario]
+
+    for key in scenarios:
+        if args.runtime_arn:
+            run_remote(key, args.runtime_arn, args.region)
+        else:
+            asyncio.run(run_local(key))
+
+
+if __name__ == "__main__":
+    main_cli()

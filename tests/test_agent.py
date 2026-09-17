@@ -13,7 +13,7 @@ os.environ['AWS_EC2_METADATA_DISABLED'] = 'true'
 
 
 class LocalInterpreter:
-    """Execute the exact calculation program locally; no AWS success is implied."""
+    """Local test double executing the generated Python discount calculation in-process."""
 
     def invoke(self, operation, arguments):
         assert operation == 'executeCode'
@@ -138,4 +138,26 @@ def test_missing_knowledge_base_does_not_allow_invented_policy():
                 {'role': 'assistant', 'content': [{'text': 'Platinum gets 20% off.'}]}]
     assert main.verified_response(
         messages) == 'Knowledge base not configured. I cannot verify the requested catalog or policy information.'
+
+
+def test_entrypoint_rejects_non_dict_payload():
+    import asyncio
+    assert 'error' in asyncio.run(main.invoke('not a dict'))
+
+
+def test_entrypoint_validates_customer_id_format():
+    import asyncio
+    payload = {'prompt': 'hello', 'customer_id': 'invalid/id/with/slashes!'}
+    result = asyncio.run(main.invoke(payload))
+    assert 'error' in result
+    assert 'invalid characters' in result['error']
+
+
+def test_kb_empty_results(monkeypatch):
+    monkeypatch.setattr(main, 'KB_ID', 'ABC1234567')
+    client = Mock()
+    client.retrieve.return_value = {'retrievalResults': []}
+    monkeypatch.setattr(main, '_bedrock_runtime', client)
+    assert main.search_knowledge_base('nonexistent') == 'No relevant information was found in the knowledge base.'
+
 
