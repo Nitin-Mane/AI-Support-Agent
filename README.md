@@ -9,7 +9,7 @@ A cloud-native customer support platform built with the **Strands SDK** and **Am
 ```mermaid
 flowchart TD
     subgraph ClientLayer["Client & Session Management"]
-        User["Customer Request"] --> Runtime["AgentCore Runtime (`invoke`)"]
+        User["Customer Request"] --> Runtime["AgentCore Runtime (invoke)"]
     end
 
     subgraph AgentCore["Agent Reasoning Core"]
@@ -187,7 +187,7 @@ tests/test_agent.py ...................                                  [100%]
 - **Defensive Memory Hooks**: Memory retrieval occurs prior to model invocation (`MessageAddedEvent`), while persistence (`AfterInvocationEvent`) is non-blocking to prevent memory service latency from degrading response time.
 - **Resilient Microservice Federation**: If Gateway MCP microservices are unreachable, the agent catches the connection failure and continues operating with remaining local tools rather than terminating abruptly.
 
-For deeper technical analysis, refer to [docs/design_decisions.md](docs/design_decisions.md).
+For deeper technical analysis, refer to [docs/design_decisions.md](docs/design_decisions.md) and the [Engineering Reflection](REFLECTION.md).
 
 ---
 

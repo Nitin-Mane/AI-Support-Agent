@@ -11,21 +11,21 @@ flowchart TD
     Client["Client / API Gateway Request"] --> Runtime["Bedrock AgentCore Runtime"]
 
     subgraph AgentCoreRuntime["AgentCore Runtime Execution Environment"]
-        Runtime --> AppHandler["App Entrypoint (`invoke`)"]
-        AppHandler --> Agent["Strands Agent (`BedrockModel: Nova 2 Lite`)"]
+        Runtime --> AppHandler["App Entrypoint: invoke"]
+        AppHandler --> Agent["Strands Agent (Nova 2 Lite)"]
         
         subgraph LifecycleHooks["Lifecycle Hooks"]
-            MemHook["`MemoryHook` (HookProvider)"]
+            MemHook["MemoryHook (HookProvider)"]
             MemHook -.->|MessageAddedEvent| MemRetrieve["Retrieve Customer Context"]
-            MemHook -.->|AfterInvocationEvent| MemPersist["Persist Customer Facts & Preferences"]
+            MemHook -.->|AfterInvocationEvent| MemPersist["Persist Customer Facts and Preferences"]
         end
         Agent <--> LifecycleHooks
     end
 
     subgraph ToolsFederation["Federated Tool Ecosystem"]
         Agent -->|"MCP Streamable HTTP / SSE"| Gateway["AgentCore Gateway"]
-        Gateway -->|"REST Integration"| LambdaOrder["`order_tracker` Lambda"]
-        Gateway -->|"Direct Tool Lambda"| LambdaRefund["`refund_processor` Lambda"]
+        Gateway -->|"REST Integration"| LambdaOrder["order_tracker Lambda"]
+        Gateway -->|"Direct Tool Lambda"| LambdaRefund["refund_processor Lambda"]
 
         Agent -->|"boto3: retrieve()"| BedrockKB["Bedrock Knowledge Base<br/>(OpenSearch Serverless Vector Index)"]
         Agent -->|"code_session"| CodeSandbox["AgentCore Code Interpreter<br/>(Sandboxed Python)"]
