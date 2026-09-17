@@ -54,6 +54,8 @@ with zipfile.ZipFile(archive_path) as archive:
     crc_error = archive.testzip()
     uncompressed = sum(i.file_size for i in archive.infolist())
 checksum = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+cloud_path = ROOT / "examples/cloud_revision/verification.json"
+cloud = json.loads(cloud_path.read_text()) if cloud_path.exists() else {}
 audit = {
     "checked_utc": datetime.now(timezone.utc).isoformat(),
     "archive": archive_path.name, "entries": len(names),
@@ -62,7 +64,10 @@ audit = {
     "checksum_mismatches": mismatches, "crc_error": crc_error,
     "archive_integrity_pass": not (forbidden or matches or mismatches or crc_error),
     "local_tests_passed": 33,
-    "revised_source_deployed": False,
+    "revised_source_deployed": cloud.get("uploaded_source_matches_current", False),
+    "fresh_cloud_scenarios_passed": cloud.get("scenarios_passed", 0),
+    "fresh_cloud_total_scenarios": cloud.get("total_scenarios", 6),
+    "submission_ready": cloud.get("submission_ready", False),
     "udacity_acceptance": "Pending re-review; this package has not been submitted",
 }
 (OUTPUT / "REVISION_02_PACKAGE_AUDIT.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")

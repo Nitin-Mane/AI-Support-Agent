@@ -1,11 +1,18 @@
 # AI Support Agent
 
 September 17 reviewer corrections are documented in [REVISION_NOTES.md](REVISION_NOTES.md).
-The revised source passes 33 local tests, including a real failed MCP connection.
-The scenario records below are historical evidence. The revised source has not
-yet been deployed or reviewed by Udacity. Test 3 was run against a real Knowledge
-Base in the personal AWS account; its recorded ARN identifies that KB, rather
-than an AgentCore Runtime. AWS sign-in must be restored for fresh deployment tests.
+The revised source passes 33 local tests and was freshly deployed to the Udacity
+sandbox on September 17. **Five of six live scenarios passed.** Both reviewer
+corrections passed cloud checks: the missing KB configuration message and an
+actionable response to a deployed dummy Gateway URL, with CloudWatch logging.
+Successful RAG remains blocked by the sandbox's `aoss:CreateSecurityPolicy`
+permission. See [fresh deployment evidence](examples/cloud_revision/README.md)
+and [verification results](examples/cloud_revision/verification.json).
+The original scenario records below are historical evidence; their personal-account
+RAG record identifies a Knowledge Base rather than an AgentCore Runtime.
+Udacity re-review remains pending.
+
+![Fresh AWS testing outcomes](examples/cloud_revision/cloud_outcomes.jpg)
 
 A cloud-native customer support platform built with the **Strands SDK** and **Amazon Bedrock AgentCore Runtime**, orchestrated with **Amazon Nova 2 Lite**. The agent integrates real-time order tracking, transactional refund processing via Model Context Protocol (MCP) Gateway microservices, semantic knowledge base retrieval (RAG) over Amazon OpenSearch Serverless, long-term cross-session memory, deterministic financial code execution, and headless browser automation.
 

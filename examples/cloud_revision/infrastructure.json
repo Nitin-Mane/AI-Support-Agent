@@ -1,0 +1,18 @@
+{
+  "checked_utc": "2026-09-17T17:51:09.533164+00:00",
+  "account": "090165623118",
+  "gateway": "READY",
+  "targets": [
+    {
+      "targetId": "URB4NPH1AS",
+      "name": "order-tracker",
+      "status": "READY"
+    },
+    {
+      "targetId": "WYACBK2K6V",
+      "name": "refund-processor",
+      "status": "READY"
+    }
+  ],
+  "memory": "ACTIVE"
+}

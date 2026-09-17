@@ -1,0 +1,95 @@
+{
+  "started_utc": "2026-09-17T17:52:22.234763+00:00",
+  "scenario": "order",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:runtime/udacity_support_p02_rev2-uE9Qrh46hn",
+  "runtime_version": "1",
+  "source_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "runtime_session_id": "4c931c1c-abfb-487f-a209-7d00e323ec4a",
+  "input": {
+    "prompt": "Can you track order ORD-001?",
+    "customer_id": "CUST-123",
+    "session_id": "fresh-order-50120d18-06c8-4c53-a01d-606d56155432"
+  },
+  "http_status": 200,
+  "output": {
+    "response": "I've retrieved the details for order ORD-001:\n\n**Order Status:** SHIPPED\n**Customer:** CUST-123\n**Items:**\n- Wireless Headphones Pro (1 x $89.99)\n\n**Total:** $89.99\n**Carrier:** UPS\n**Tracking Number:** TRK987654321\n**Estimated Delivery:** September 19, 2026\n\nThe order is currently in transit and expected to be delivered by September 19th. Would you like me to help with anything else regarding this order?",
+    "customer_id": "CUST-123",
+    "session_id": "fresh-order-50120d18-06c8-4c53-a01d-606d56155432",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "text": "Can you track order ORD-001?"
+          }
+        ],
+        "tracking_id": "5d400a1d-7ee0-471c-abcb-efd0e78c628c"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "toolUse": {
+              "toolUseId": "tooluse_xh23jFP1w6qnk5uTVUty17",
+              "name": "order-tracker___get_order",
+              "input": {
+                "order_id": "ORD-001"
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "usage": {
+            "inputTokens": 5779,
+            "outputTokens": 33,
+            "totalTokens": 5812
+          },
+          "metrics": {
+            "latencyMs": 782,
+            "timeToFirstByteMs": 797
+          }
+        },
+        "tracking_id": "c5d0609b-7b68-4c1d-92bd-610dcba99e63"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "toolResult": {
+              "status": "success",
+              "toolUseId": "tooluse_xh23jFP1w6qnk5uTVUty17",
+              "content": [
+                {
+                  "text": "{\"order_id\":\"ORD-001\",\"customer_id\":\"CUST-123\",\"status\":\"SHIPPED\",\"items\":[{\"name\":\"Wireless Headphones Pro\",\"qty\":1,\"price\":89.99}],\"total\":89.99,\"tracking_number\":\"TRK987654321\",\"carrier\":\"UPS\",\"estimated_delivery\":\"2026-09-19\"}"
+                }
+              ],
+              "isError": false
+            }
+          }
+        ],
+        "tracking_id": "94292092-e9e1-4215-aad6-32ce3f93f75b"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "text": "I've retrieved the details for order ORD-001:\n\n**Order Status:** SHIPPED\n**Customer:** CUST-123\n**Items:**\n- Wireless Headphones Pro (1 x $89.99)\n\n**Total:** $89.99\n**Carrier:** UPS\n**Tracking Number:** TRK987654321\n**Estimated Delivery:** September 19, 2026\n\nThe order is currently in transit and expected to be delivered by September 19th. Would you like me to help with anything else regarding this order?"
+          }
+        ],
+        "metadata": {
+          "usage": {
+            "inputTokens": 5910,
+            "outputTokens": 108,
+            "totalTokens": 6018
+          },
+          "metrics": {
+            "latencyMs": 1278,
+            "timeToFirstByteMs": 939
+          }
+        },
+        "tracking_id": "554334c9-4e11-438c-a4c1-0475fe680144"
+      }
+    ]
+  },
+  "completed_utc": "2026-09-17T17:52:32.632413+00:00"
+}

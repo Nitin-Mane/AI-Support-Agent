@@ -41,14 +41,35 @@ Runtime executing that test. Other saved successful records identify the origina
 Udacity sandbox AgentCore Runtime from September 15. The vector resources were
 recorded as cleaned up; default configuration currently has no KB or Gateway URL.
 
-At the time of this rework, all AWS browser tabs were signed out and each saved
-credential set failed STS validation. The revised source has therefore **not been
-redeployed**. Restoring AWS authentication is required before fresh cloud tests.
-The reviewer corrections have been verified locally; Udacity acceptance remains
-pending. No revised project was uploaded or submitted during this rework.
+## Fresh cloud verification, September 17
 
-After authentication, recreate the test resources, generate their actual IDs,
-deploy this source, rerun order/refund and the RAG query, and capture the real
-outputs. Keep deliberate negative-test records separate from successful scenario
-evidence. The instructor's sandbox account instruction and any personal-account
-use must remain explicitly documented.
+The Udacity sandbox session was refreshed and its account verified through STS.
+New resources were created under `udacity-p02-rev2`. The corrected source was
+deployed to runtime `udacity_support_p02_rev2-uE9Qrh46hn`. Its uploaded `main.py`
+SHA-256 matches the current source and the local correction checks.
+
+Five of six required live scenarios passed: order tracking, both API and Lambda
+Gateway targets during refund processing, cross-session memory, Code Interpreter
+discounts, and Browser page-title retrieval. The first memory recall attempts
+returned no extracted records; a later independent session recalled Jane and her
+concise-response preference after extraction and retrieval became available.
+Browser navigation recovered from one invalid session-name argument before
+returning the live Udacity title. These intermediate results are disclosed in
+the fresh evidence rather than described as clean first-attempt passes.
+
+The missing-KB guard passed in runtime version 1. A dummy Gateway URL deployed
+in version 2 returned `GATEWAY_UNAVAILABLE` and a safe retry/administrator message.
+CloudWatch recorded successful tool loading and the intentional failure.
+Version 3 restored the valid Gateway and passed the final memory recall.
+See [fresh verification results](examples/cloud_revision/verification.json).
+
+Successful RAG retrieval remains pending. A fresh attempt to create the required
+OpenSearch encryption policy was denied for `aoss:CreateSecurityPolicy` in sandbox
+account `090165623118`. The personal AWS sign-in is still awaiting user completion;
+the saved personal credentials are expired or invalid. No permissions were
+bypassed. The earlier personal-account RAG record remains historical evidence.
+
+The temporary deployment was removed after recording evidence; see the cleanup
+records in `examples/cloud_revision`. Udacity acceptance remains pending, and no
+revised submission was uploaded. Successful RAG must be retested through an
+AgentCore Runtime after suitable AWS access is available.

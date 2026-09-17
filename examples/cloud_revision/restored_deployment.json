@@ -1,0 +1,40 @@
+{
+  "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:runtime/udacity_support_p02_rev2-uE9Qrh46hn",
+  "agentRuntimeName": "udacity_support_p02_rev2",
+  "agentRuntimeId": "udacity_support_p02_rev2-uE9Qrh46hn",
+  "agentRuntimeVersion": "3",
+  "createdAt": "2026-09-17 17:51:24.124524+00:00",
+  "lastUpdatedAt": "2026-09-17 17:56:52.176755+00:00",
+  "roleArn": "arn:aws:iam::090165623118:role/udacity-p02-rev2-runtime",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "status": "READY",
+  "lifecycleConfiguration": {
+    "idleRuntimeSessionTimeout": 900,
+    "maxLifetime": 28800
+  },
+  "workloadIdentityDetails": {
+    "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:workload-identity-directory/default/workload-identity/udacity_support_p02_rev2-uE9Qrh46hn"
+  },
+  "agentRuntimeArtifact": {
+    "codeConfiguration": {
+      "code": {
+        "s3": {
+          "bucket": "udacity-p02-rev2-runtime-090165623118",
+          "prefix": "udacity_support_p02_rev2/deployment.zip"
+        }
+      },
+      "runtime": "PYTHON_3_13",
+      "entryPoint": [
+        "main.py"
+      ]
+    }
+  },
+  "protocolConfiguration": {
+    "serverProtocol": "HTTP"
+  },
+  "metadataConfiguration": {
+    "requireMMDSV2": true
+  }
+}
