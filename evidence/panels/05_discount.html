@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Test 5 | Loyalty calculation</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 24px; background: #f3f5f8; color: #152238; font: 16px/1.5 'Segoe UI', sans-serif; }
+main { width: 1100px; max-width: 100%; padding: 28px 32px; background: white; border: 1px solid #d7dfe9; border-radius: 10px; }
+.eyebrow { font-size: 13px; color: #50637e; letter-spacing: 1px; }
+h1 { font-size: 26px; margin: 6px 0 12px; }
+h2 { font-size: 15px; margin: 16px 0 6px; }
+.status { color: #12614c; font-weight: 600; }
+.meta, footer { color: #53647a; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+pre { margin: 0; padding: 15px 18px; background: #f4f7fb; border-left: 3px solid #406aa5; white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.5 Consolas, monospace; }
+footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid #d7dfe9; }
+</style>
+<main id="outcome-panel">
+<div class="eyebrow">AI SUPPORT AGENT · ASSIGNMENT 02 · RECORDED AWS OUTPUT</div>
+<h1>Test 5 | Loyalty calculation</h1>
+<div class="status">Recorded successful scenario</div>
+<p class="meta">Run started (UTC): 2026-09-15T18:01:57.271628+00:00
+HTTP 200 | Customer: CUST-123 | Session: t5
+Runtime session: 22329c61-fa52-4ba1-b1b3-bfa9bada07be</p>
+<h2>Request</h2><pre>I am a Gold member with 4250 points. Calculate my discount on a $150 standard order.</pre>
+<h2>Agent response — verbatim</h2><pre>Discount calculation:
+{
+  &quot;points_redeemed&quot;: 4000,
+  &quot;points_discount&quot;: 40.0,
+  &quot;tier_discount_pct&quot;: 10.0,
+  &quot;tier_discount&quot;: 11.0,
+  &quot;final_total&quot;: 99.0,
+  &quot;total_savings&quot;: 51.0,
+  &quot;points_earned&quot;: 99,
+  &quot;remaining_points&quot;: 349,
+  &quot;calculation_mode&quot;: &quot;code_interpreter&quot;
+}</pre>
+<footer>Source: evidence/live/05_discount.json
+SHA-256: 31466895c25ae775fddd9797da08c8d1f1482b1e0296a402f902a33e10b0456d
+Saved runtime evidence, displayed locally. This is not a live AWS console view.
+The test deployment was removed after evidence collection. Course fixtures represent no real payments.</footer>
+</main></html>

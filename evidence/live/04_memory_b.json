@@ -1,0 +1,47 @@
+{
+  "started_utc": "2026-09-15T18:01:57.271696+00:00",
+  "runtime_session_id": "d390c585-59d4-47d3-814b-8633c341232a",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:runtime/udacity_support_p02-VIIEebGjDN",
+  "input": {
+    "prompt": "Do you remember my name and communication preference?",
+    "customer_id": "CUST-123",
+    "session_id": "s-B"
+  },
+  "http_status": 200,
+  "output": {
+    "response": "Yes, Jane. I remember you prefer concise responses.",
+    "customer_id": "CUST-123",
+    "session_id": "s-B",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "text": "Customer Context:\n[SEMANTIC] Jane prefers concise responses.\n[SEMANTIC] The user's name is Jane.\n[SEMANTIC] The user has 4,250 loyalty points.\n[SEMANTIC] The user is a Gold member in a loyalty/rewards program.\n[SEMANTIC] The user placed a $150 standard order on 2026-09-15.\n[USER_PREFERENCE] {\"context\":\"The user explicitly stated that they prefer concise responses.\",\"preference\":\"Prefers concise responses\",\"categories\":[\"communication style\"]}\n[USER_PREFERENCE] {\"context\":\"The user asked to calculate a discount on a $150 standard order, indicating they are interested in maximizing savings through points redemption and tier discounts.\",\"preference\":\"Interested in maximizing discounts by combining points redemption with tier-based discounts on orders\",\"categories\":[\"shopping\",\"discounts\",\"rewards\",\"loyalty program\"]}\n\nDo you remember my name and communication preference?"
+          }
+        ],
+        "tracking_id": "75138de8-554e-4c45-990b-2a475f44b927"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "text": "Yes, Jane. I remember you prefer concise responses."
+          }
+        ],
+        "metadata": {
+          "usage": {
+            "inputTokens": 5966,
+            "outputTokens": 14,
+            "totalTokens": 5980
+          },
+          "metrics": {
+            "latencyMs": 1105,
+            "timeToFirstByteMs": 1053
+          }
+        },
+        "tracking_id": "6068be28-3b67-47c6-a5cc-fd6ee217b7ef"
+      }
+    ]
+  }
+}

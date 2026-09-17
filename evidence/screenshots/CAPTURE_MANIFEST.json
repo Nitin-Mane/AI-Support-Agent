@@ -1,0 +1,71 @@
+{
+  "checked_utc": "2026-09-17T02:50:09.296463+00:00",
+  "panels": [
+    {
+      "file": "01_order.jpg",
+      "width": 1100,
+      "height": 821,
+      "sha256": "d5aeae24a2fd8c12e6bcc7f8814e8ca5f6146eed0d180452e25f2707c949c891",
+      "source": "Local rendering of saved September 15 AWS runtime output",
+      "captured_utc": "2026-09-17T02:03:04.639687+00:00"
+    },
+    {
+      "file": "02_refund.jpg",
+      "width": 1100,
+      "height": 614,
+      "sha256": "0c0af7b0e75ee72a4ed1cd8f7f91ac5f705d9d81bbaf2da12bf89355b04ddda7",
+      "source": "Local rendering of saved September 15 AWS runtime output",
+      "captured_utc": "2026-09-17T02:04:13.065953+00:00"
+    },
+    {
+      "file": "03_rag.jpg",
+      "width": 1100,
+      "height": 658,
+      "sha256": "ded13efdf691e158d51edb69b2f97fe1f6a80477d751248abd2ced8c284547ea",
+      "source": "Local rendering of passing September 17 AWS Knowledge Base runtime output",
+      "captured_utc": "2026-09-17T02:50:09.296463+00:00"
+    },
+    {
+      "file": "04_memory_a.jpg",
+      "width": 1100,
+      "height": 524,
+      "sha256": "4face33235428c4111f59dc5181c9267955b47a6a08141f2677064591c677df5",
+      "source": "Local rendering of saved September 15 AWS runtime output",
+      "captured_utc": "2026-09-17T02:05:00.957781+00:00"
+    },
+    {
+      "file": "04_memory_b.jpg",
+      "width": 1100,
+      "height": 524,
+      "sha256": "8fca57bea8ce417d3b1ae94a0bc0873368b25ad4532c55738ef556a6a1333cfb",
+      "source": "Local rendering of saved September 15 AWS runtime output",
+      "captured_utc": "2026-09-17T02:05:16.966497+00:00"
+    },
+    {
+      "file": "05_discount.jpg",
+      "width": 1100,
+      "height": 771,
+      "sha256": "8f72b6abaaac8b7ef0fb4e340d114f8e076948d9b00524e10c4c1835cddc29c8",
+      "source": "Local rendering of saved September 15 AWS runtime output",
+      "captured_utc": "2026-09-17T02:05:44.308891+00:00"
+    },
+    {
+      "file": "06_browser.jpg",
+      "width": 1100,
+      "height": 569,
+      "sha256": "519d389cd05eea1eb6c13767179278210563de16314dfc574ebcd9ea989c5612",
+      "source": "Local rendering of saved September 15 AWS runtime output",
+      "captured_utc": "2026-09-17T02:06:02.070750+00:00"
+    },
+    {
+      "file": "08_aws_s3_vectors_permission.jpg",
+      "width": 1202,
+      "height": 301,
+      "sha256": "c6fa3a6c3bc2c98df7ef13754a003f80e371dd29f1b2af80f52a239da20107d8",
+      "source": "Live AWS console",
+      "captured_utc": "2026-09-17T02:01:20.141536+00:00"
+    }
+  ],
+  "visual_review": "All eight inspected; outcome panels only, complete text, no pointer visible.",
+  "runtime_responses_match_source": true
+}

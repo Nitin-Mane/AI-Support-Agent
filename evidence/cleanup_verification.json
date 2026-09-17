@@ -1,0 +1,71 @@
+{
+  "checked_utc": "2026-09-16T19:41:37.630768+00:00",
+  "all_recorded_resources_absent": true,
+  "checks": [
+    {
+      "resource": "runtime",
+      "absent": true,
+      "response_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "gateway",
+      "absent": true,
+      "response_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "memory",
+      "absent": true,
+      "response_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "rest_api",
+      "absent": true,
+      "response_code": "NotFoundException"
+    },
+    {
+      "resource": "order_tracker",
+      "absent": true,
+      "response_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "refund_processor",
+      "absent": true,
+      "response_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "bucket",
+      "absent": true,
+      "response_code": "404"
+    },
+    {
+      "resource": "runtime_bucket",
+      "absent": true,
+      "response_code": "404"
+    },
+    {
+      "resource": "lambda_role",
+      "absent": true,
+      "response_code": "NoSuchEntity"
+    },
+    {
+      "resource": "gateway_role",
+      "absent": true,
+      "response_code": "NoSuchEntity"
+    },
+    {
+      "resource": "knowledge-base_role",
+      "absent": true,
+      "response_code": "NoSuchEntity"
+    },
+    {
+      "resource": "runtime_role",
+      "absent": true,
+      "response_code": "NoSuchEntity"
+    },
+    {
+      "resource": "alarm",
+      "absent": true
+    }
+  ],
+  "scope": "Project runtime, gateway, memory, API, Lambdas, buckets, custom roles and alarm. Shared service-linked roles and account-wide logging settings are retained."
+}

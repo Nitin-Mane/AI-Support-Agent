@@ -1,0 +1,13 @@
+{
+  "captured_utc": "2026-09-17T02:01:20.141Z",
+  "source": "https://us-east-1.console.aws.amazon.com/s3/vectors?region=us-east-1",
+  "account": "090165623118",
+  "region": "us-east-1",
+  "type": "Live AWS console outcome panel",
+  "clip": {
+    "x": 24,
+    "y": 153,
+    "width": 1202,
+    "height": 301
+  }
+}

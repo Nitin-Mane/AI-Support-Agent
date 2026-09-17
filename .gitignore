@@ -1,0 +1,22 @@
+# Python and Virtual Environments
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.pyo
+*.pyd
+
+# Local Credentials & Secrets
+.local/
+.env
+*.pem
+*.key
+
+# Tooling and Deployment Scratch
+.bedrock_agentcore/
+.bedrock_agentcore.yaml
+deployment/
+project_outcome/
+assignment/
+upstream/

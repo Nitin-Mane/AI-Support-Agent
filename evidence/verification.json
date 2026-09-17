@@ -1,0 +1,27 @@
+{
+  "verified_utc": "2026-09-17T02:51:37.379992+00:00",
+  "live_scenarios": {
+    "01_order": true,
+    "02_refund": true,
+    "03_rag": true,
+    "04_memory": true,
+    "05_discount": true,
+    "06_browser": true
+  },
+  "passed_live_scenarios": 6,
+  "required_live_scenarios": 6,
+  "submission_ready": true,
+  "original_assets_unchanged": {
+    "lambda/lambda_schema": true,
+    "lambda/order_tracker.py": true,
+    "lambda/refund_processor.py": true,
+    "product_catalog.txt": true
+  },
+  "reflection_word_count": 280,
+  "reflection_length_valid": true,
+  "notes": [
+    "Local unit tests are separate from deployed-agent evidence.",
+    "The Knowledge Base RAG scenario was tested live with verified OpenSearch retrieval.",
+    "CloudWatch alarm configuration is exported as JSON; no console screenshot is claimed."
+  ]
+}

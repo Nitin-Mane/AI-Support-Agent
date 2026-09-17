@@ -1,0 +1,21 @@
+[project]
+name = "customer-support-agent"
+version = "1.0.0"
+description = "Customer support agent using Amazon Bedrock AgentCore and Strands"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "bedrock-agentcore==1.23.0",
+  "strands-agents==1.55.1",
+  "strands-agents-tools==0.8.8",
+  "boto3==1.43.94",
+  "mcp==2.1.1",
+  "playwright==1.63.0",
+  "nest-asyncio==1.6.0",
+]
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "bedrock-agentcore-starter-toolkit==0.3.12"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

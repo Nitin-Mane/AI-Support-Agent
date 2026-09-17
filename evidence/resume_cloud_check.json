@@ -1,0 +1,31 @@
+{
+  "checked_utc": "2026-09-16T19:36:26.355519+00:00",
+  "account": "090165623118",
+  "checks": {
+    "list_collections": {
+      "ok": false,
+      "error": "An error occurred (AccessDeniedException) when calling the ListCollections operation: User: arn:aws:sts::090165623118:assumed-role/voclabs/user3218979=11627499705 is not authorized to perform: aoss:ListCollections on resource: arn:aws:aoss:us-east-1:090165623118:collection/* because no identity-based policy allows the aoss:ListCollections action"
+    },
+    "list_knowledge_bases": {
+      "ok": true,
+      "result": {
+        "knowledgeBaseSummaries": []
+      }
+    },
+    "list_agent_runtimes": {
+      "ok": true,
+      "result": {
+        "agentRuntimes": [
+          {
+            "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:runtime/udacity_support_p02-VIIEebGjDN",
+            "agentRuntimeId": "udacity_support_p02-VIIEebGjDN",
+            "agentRuntimeVersion": "2",
+            "agentRuntimeName": "udacity_support_p02",
+            "lastUpdatedAt": "2026-09-15 18:00:23.255832+00:00",
+            "status": "READY"
+          }
+        ]
+      }
+    }
+  }
+}
