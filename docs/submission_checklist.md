@@ -1,7 +1,7 @@
 # Udacity rubric and reviewer recheck
 
 Checked against the live classroom rubric, Environment Setup, Instructions, and
-the review of submission **4823700** on September 17, 2026.
+the review of submission **4823700** on September 17, with the live rubric checked again on September 18, 2026.
 The classroom still reports two specifications requiring changes. This document
 maps the revised work to those requests; it does not claim a new Udacity grade.
 
@@ -9,9 +9,9 @@ maps the revised work to those requests; it does not claim a new Udacity grade.
 
 | Requested correction | Revised implementation | Measured evidence |
 | --- | --- | --- |
-| Missing or blank `KB_ID` must return a descriptive message | `search_knowledge_base` checks missing, empty and whitespace-only values before calling AWS | [Local checks](../examples/revision/failure_checks.json); [deployed empty-KB response](../examples/cloud_revision/rag.json) |
-| Gateway failures must be logged and give a useful, safe reply | `invoke` catches connection/discovery failures, logs diagnostics, returns `GATEWAY_UNAVAILABLE`, and keeps the transport active throughout successful tool use | [Deployed dummy-URL test](../examples/cloud_revision/gateway_failure.json); [CloudWatch logs](../examples/cloud_revision/runtime_logs.json) |
-| Gateway test responses must be well formed | Successful API order lookup and Lambda refund results are nonempty JSON; the Lambda proxy body also parses as JSON | [Fresh refund trace](../examples/cloud_revision/refund.json); [response audit](../examples/cloud_revision/verification.json) |
+| Missing or blank `KB_ID` must return a descriptive message | `search_knowledge_base` checks missing, empty and whitespace-only values before calling AWS | [Local checks](../examples/revision/failure_checks.json); [deployed empty-KB response](../examples/cloud_final/rag_guard.json) |
+| Gateway failures must be logged and give a useful, safe reply | `invoke` catches connection/discovery failures, logs diagnostics, returns `GATEWAY_UNAVAILABLE`, and keeps the transport active throughout successful tool use | [Deployed dummy-URL test](../examples/cloud_final/gateway_failure.json); [CloudWatch logs](../examples/cloud_final/runtime_logs.json) |
+| Gateway test responses must be well formed | Successful API order lookup and Lambda refund results are nonempty JSON; the Lambda proxy body also parses as JSON | [Fresh refund trace](../examples/cloud_final/refund.json); [response audit](../examples/cloud_final/verification.json) |
 
 ## Every rubric criterion
 
@@ -21,13 +21,14 @@ maps the revised work to those requests; it does not claim a new Udacity grade.
 - `invoke` is asynchronous and decorated with `@app.entrypoint`.
 - The executable entry point calls `app.run()`.
 - The fresh `agentcore invoke` order command and its terminal output are in
-  [agentcore_invoke.txt](../examples/cloud_revision/agentcore_invoke.txt), with
+  [agentcore_invoke.txt](../examples/cloud_final/agentcore_invoke.txt), with
   timestamp, runtime ARN, source hash and exit code in
-  [agentcore_invoke.json](../examples/cloud_revision/agentcore_invoke.json).
+  [agentcore_invoke.json](../examples/cloud_final/agentcore_invoke.json).
 
-The CLI check uses a separate temporary sandbox runtime running the same revised
-`main.py`. It supplements the earlier fresh SDK invocation records; it does not
-replace or change their recorded runtime identifiers.
+The CLI check and all six positive scenarios use the same complete personal-account
+runtime, `udacity_support_p02_rag_final-J3LfIlBY56`, version 1. The uploaded source
+hash matches current `main.py`. Versions 2 and 3 are intentional configuration
+failure tests; version 4 restores the valid configuration before cleanup.
 
 ### 2. MCP Gateway
 
@@ -39,9 +40,9 @@ replace or change their recorded runtime identifiers.
 - Their outputs are valid, nonempty JSON and not error results.
 - Successful discovery and the intentional connection failure are logged.
 
-Evidence: [refund.json](../examples/cloud_revision/refund.json),
-[verification.json](../examples/cloud_revision/verification.json), and
-[runtime_logs.json](../examples/cloud_revision/runtime_logs.json).
+Evidence: [refund.json](../examples/cloud_final/refund.json),
+[verification.json](../examples/cloud_final/verification.json), and
+[runtime_logs.json](../examples/cloud_final/runtime_logs.json).
 The deliberate dummy-Gateway error is kept in a separate negative-test record.
 
 ### 3. Knowledge Base RAG
@@ -54,12 +55,18 @@ The deliberate dummy-Gateway error is kept in a separate negative-test record.
 - Local tests cover missing settings, successful retrieval, and empty results;
   the deployed missing-setting check returns the required configuration message.
 
-**Remaining live gap:** Instructions Test 3 requires a successful Platinum query
-through the deployed agent. This is blocked by sandbox OpenSearch permissions.
-[rag_permission.json](../examples/cloud_revision/rag_permission.json) records
-the denied `aoss:CreateSecurityPolicy` call. The older personal-account RAG trace
-is a real retrieval result, but its ARN identifies a Knowledge Base rather than
-an AgentCore Runtime; it is not counted as a fresh deployed-agent pass.
+**Successful deployed RAG is verified:** Instructions Test 3 returned free
+same-day shipping, a 15% discount and priority customer support from the catalog.
+[rag.json](../examples/cloud_final/rag.json) identifies the actual AgentCore
+Runtime and includes its request, tool messages, response and source hash.
+[agentcore_rag.txt](../examples/cloud_final/agentcore_rag.txt) provides successful
+CLI output. The catalog ingestion completed without failed documents.
+
+The sandbox permission denial was not bypassed. The user-authorized personal
+account was used for all six final scenarios. A separate provisioning signing
+issue was corrected by including the required payload-hash header;
+[provisioning diagnostics](../examples/cloud_final/provisioning_diagnostics.json)
+and the reusable [index helper](../scripts/create_catalog_index.py) document it.
 
 ### 4. Cross-session memory
 
@@ -74,8 +81,8 @@ an AgentCore Runtime; it is not counted as a fresh deployed-agent pass.
   IDs. Session B recalls Jane and her concise-response preference after the
   extracted records become retrievable.
 
-Evidence: [memory_a.json](../examples/cloud_revision/memory_a.json) and
-[memory_b.json](../examples/cloud_revision/memory_b.json).
+Evidence: [memory_a.json](../examples/cloud_final/memory_a.json) and
+[memory_b.json](../examples/cloud_final/memory_b.json).
 An early unsuccessful recall is preserved in `memory_b_initial.json`.
 
 ### 5. Code Interpreter
@@ -89,7 +96,7 @@ An early unsuccessful recall is preserved in `memory_b_initial.json`.
 - Results include `points_redeemed`, `tier_discount_pct`, `final_total` and
   `remaining_points`.
 
-Evidence: [discount.json](../examples/cloud_revision/discount.json) records
+Evidence: [discount.json](../examples/cloud_final/discount.json) records
 actual Code Interpreter execution: 4,000 points redeemed, 10% Gold tier rate,
 $99 final total and 349 points remaining. The local suite covers the fallback.
 
@@ -100,21 +107,21 @@ $99 final total and 349 points remaining. The local suite covers the fallback.
 - The fresh trace shows navigation to the requested Udacity website and a title
   read from the live page. It recovered from one session-name validation error.
 
-Evidence: [browser.json](../examples/cloud_revision/browser.json).
+Evidence: [browser.json](../examples/cloud_final/browser.json).
 The Instructions page's command requests Udacity, although its expected-result
 sentence says Amazon.com. The command is followed, and the actual title is
 recorded without substituting a title from a different website.
 
 ### 7. Reflection
 
-- [REFLECTION.md](../REFLECTION.md) contains 293 body words, within 200-400.
+- [REFLECTION.md](../REFLECTION.md) contains 290 body words (excluding headings), within 200-400.
 - It explains choosing Code Interpreter for loyalty calculations.
 - It describes observed arithmetic drift and the response enforcement fix.
 - It discusses authentication, authorization, refund idempotency and memory
   retention as production considerations.
 
 The reviewer accepted this criterion. Word count and structural checks are in
-[rubric_recheck.json](../examples/revision/rubric_recheck.json).
+[rubric_recheck.json](../examples/cloud_final/rubric_recheck.json).
 
 ## Instruction and setup checklist
 
@@ -126,15 +133,19 @@ The reviewer accepted this criterion. Word count and structural checks are in
 - [x] Both reviewer corrections tested in the cloud.
 - [x] Fresh CLI invocation evidence included.
 - [x] Outcome screenshots captured without a cursor.
-- [ ] Task 7 fully complete: successful deployed RAG remains pending.
-- [ ] All four live configuration values available for a complete deployment:
-  `KB_ID` is unavailable in the sandbox. The packaged configuration is a template;
-  resources were deleted after testing, so historical IDs must not be reused.
+- [x] Task 7: all six required scenarios passed through the complete deployed agent.
+- [x] All four configuration values were present in the actual uploaded deployment,
+  including a synced Knowledge Base. See `uploaded_config` in
+  [source_verification.json](../examples/cloud_final/source_verification.json).
+  The packaged configuration remains a template because resources were deleted
+  after testing; historical IDs must not be reused.
 - [ ] Revised project submitted and accepted by Udacity.
 
-The required region is `us-east-1`, and the fresh deployments use the Udacity
-sandbox. Personal-account RAG was previously authorized by the user, but remains
-a disclosed deviation from the classroom's sandbox setup instruction.
+The required region is `us-east-1`. The September 17 run used the Udacity sandbox;
+the complete September 18 run used the expressly authorized personal account
+`166977155856` after sandbox vector-store permissions were denied. This is a
+disclosed deviation from the classroom's sandbox setup instruction. No sandbox
+IAM policies were changed.
 
 Structured Pydantic validation is already implemented for discount output.
 Conversation summarization and domain personalization are optional suggestions,
@@ -150,4 +161,6 @@ The revision ZIP includes the implementation, configuration template, dependency
 files, original Lambda functions and schema, catalog, reflection, this checklist,
 test records and screenshots. Credential files, deployment scratch directories
 and virtual environments are excluded. Do not describe the package as fully
-verified until the successful deployed RAG check is recorded.
+verified from the local suite alone. The separate cloud audit now confirms all
+six scenarios, source identity, CLI output and reviewer corrections; Udacity
+acceptance still requires re-review.

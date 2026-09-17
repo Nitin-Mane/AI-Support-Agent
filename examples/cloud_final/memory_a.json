@@ -1,0 +1,51 @@
+{
+  "started_utc": "2026-09-17T22:58:21.538856+00:00",
+  "scenario": "memory_a",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56",
+  "runtime_version": "1",
+  "source_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "runtime_session_id": "983627f3-b01a-46cd-a7b4-0cf3db45f2aa",
+  "input": {
+    "prompt": "Hi, I am Jane. I prefer concise responses.",
+    "customer_id": "FINAL-CUST-123",
+    "session_id": "fresh-memory_a-9d14b1fe-6305-4b98-a382-9282439a692f"
+  },
+  "http_status": 200,
+  "output": {
+    "response": "Hello Jane. I'll keep my responses concise. How can I assist you today?",
+    "customer_id": "FINAL-CUST-123",
+    "session_id": "fresh-memory_a-9d14b1fe-6305-4b98-a382-9282439a692f",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "text": "Hi, I am Jane. I prefer concise responses."
+          }
+        ],
+        "tracking_id": "2d587de2-71f0-45c2-a7a1-ea1d4f368d99"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "text": "Hello Jane. I'll keep my responses concise. How can I assist you today?"
+          }
+        ],
+        "metadata": {
+          "usage": {
+            "inputTokens": 5783,
+            "outputTokens": 19,
+            "totalTokens": 5802
+          },
+          "metrics": {
+            "latencyMs": 750,
+            "timeToFirstByteMs": 696
+          }
+        },
+        "tracking_id": "57ee4e03-a82e-4559-8cf2-753c04fee583"
+      }
+    ]
+  },
+  "completed_utc": "2026-09-17T22:58:32.847052+00:00"
+}

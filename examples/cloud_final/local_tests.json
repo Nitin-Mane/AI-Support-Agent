@@ -1,0 +1,10 @@
+{
+  "run_date_india": "2026-09-18",
+  "command": ".venv\\Scripts\\python.exe -m pytest tests -q",
+  "exit_code": 0,
+  "passed": 33,
+  "warnings": 1,
+  "duration_seconds": 11.55,
+  "summary": "33 passed, 1 warning in 11.55s",
+  "warning": "Upstream bedrock_agentcore.runtime.context.RequestContext uses Pydantic class-based Config, which is deprecated"
+}

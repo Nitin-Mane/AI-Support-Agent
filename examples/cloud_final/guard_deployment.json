@@ -1,0 +1,25 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "6956d28e-694d-4476-a6c3-4fc280159ab3",
+    "HTTPStatusCode": 202,
+    "HTTPHeaders": {
+      "date": "Thu, 17 Sep 2026 23:01:19 GMT",
+      "content-type": "application/json",
+      "content-length": "515",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "6956d28e-694d-4476-a6c3-4fc280159ab3",
+      "x-amz-apigw-id": "D3ah6H_SoAMEphQ=",
+      "x-amzn-trace-id": "Root=1-6aac713e-6106c8b41a5c2d6f06eb550c"
+    },
+    "RetryAttempts": 0
+  },
+  "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56",
+  "agentRuntimeId": "udacity_support_p02_rag_final-J3LfIlBY56",
+  "workloadIdentityDetails": {
+    "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:workload-identity-directory/default/workload-identity/udacity_support_p02_rag_final-J3LfIlBY56"
+  },
+  "agentRuntimeVersion": "2",
+  "createdAt": "2026-09-17 22:57:36.899487+00:00",
+  "lastUpdatedAt": "2026-09-17 23:01:19.137843+00:00",
+  "status": "UPDATING"
+}

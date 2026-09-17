@@ -1,0 +1,240 @@
+[
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-983627f3-b01a-46cd-a7b4-0cf3db45f2aa]51a6282a-654c-4e26-9a11-bee3be433b3e",
+    "timestamp": 1789685911191,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789685912680,
+    "eventId": "39911329490870596473539980424696940989323102865596350467"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-983627f3-b01a-46cd-a7b4-0cf3db45f2aa]51a6282a-654c-4e26-9a11-bee3be433b3e",
+    "timestamp": 1789685911820,
+    "message": "INFO:customer_support:Memory retrieval: actor=FINAL-CUST-123 session=fresh-memory_a-9d14b1fe-6305-4b98-a382-9282439a692f records=0",
+    "ingestionTime": 1789685912680,
+    "eventId": "39911329504897765203415742380722907782818922252858032134"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-983627f3-b01a-46cd-a7b4-0cf3db45f2aa]51a6282a-654c-4e26-9a11-bee3be433b3e",
+    "timestamp": 1789685912678,
+    "message": "INFO:customer_support:Memory saved: actor=FINAL-CUST-123 session=fresh-memory_a-9d14b1fe-6305-4b98-a382-9282439a692f",
+    "ingestionTime": 1789685914023,
+    "eventId": "39911329524031804583755017037784551719956125010790711296"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-6cd49635-809a-4633-aca0-b71cda4cc010]4bf2a57f-8f64-4df4-97cf-762854bd32a6",
+    "timestamp": 1789685922876,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789685924386,
+    "eventId": "39911329751454804118370311847693734163077171580209922051"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-6cd49635-809a-4633-aca0-b71cda4cc010]4bf2a57f-8f64-4df4-97cf-762854bd32a6",
+    "timestamp": 1789685923438,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=fresh-rag-14edd5c2-5b65-4eef-880d-b5c52147d5ff records=0",
+    "ingestionTime": 1789685924386,
+    "eventId": "39911329763987822919944522053236807832305550746570915846"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-6cd49635-809a-4633-aca0-b71cda4cc010]4bf2a57f-8f64-4df4-97cf-762854bd32a6",
+    "timestamp": 1789685925886,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=fresh-rag-14edd5c2-5b65-4eef-880d-b5c52147d5ff",
+    "ingestionTime": 1789685926660,
+    "eventId": "39911329818580047165947487506465240771237715052520734724"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-8b10e8e5-7192-4ed7-9c9f-23183b233906]709a1814-0a8f-442c-b7f6-126577129adc",
+    "timestamp": 1789685945844,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789685946431,
+    "eventId": "39911330263658319838221664189136614765175050479113404420"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-8b10e8e5-7192-4ed7-9c9f-23183b233906]709a1814-0a8f-442c-b7f6-126577129adc",
+    "timestamp": 1789685946428,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=fresh-order-26033eac-3aec-410b-96ff-8427ab23937c records=0",
+    "ingestionTime": 1789685947463,
+    "eventId": "39911330276681955034163548105041504568575063123939622912"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-8b10e8e5-7192-4ed7-9c9f-23183b233906]709a1814-0a8f-442c-b7f6-126577129adc",
+    "timestamp": 1789685948889,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=fresh-order-26033eac-3aec-410b-96ff-8427ab23937c",
+    "ingestionTime": 1789685950175,
+    "eventId": "39911330331564088967747411659639465065903144791615864841"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-63d6c079-0aef-4b1d-bbf3-ee53dd826159]b8dbe1af-3887-427c-b80d-087f420782f7",
+    "timestamp": 1789685959063,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789685960324,
+    "eventId": "39911330558451870617597971513892859205493656833300430851"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-63d6c079-0aef-4b1d-bbf3-ee53dd826159]b8dbe1af-3887-427c-b80d-087f420782f7",
+    "timestamp": 1789685959576,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=fresh-refund-1f9b7c33-3d2f-40d5-922d-a44440c573ec records=0",
+    "ingestionTime": 1789685960324,
+    "eventId": "39911330569892152904444181185500682679362266285868384262"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-63d6c079-0aef-4b1d-bbf3-ee53dd826159]b8dbe1af-3887-427c-b80d-087f420782f7",
+    "timestamp": 1789685962759,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=fresh-refund-1f9b7c33-3d2f-40d5-922d-a44440c573ec",
+    "ingestionTime": 1789685964551,
+    "eventId": "39911330640875424871367154650119074565141588715113218049"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-bc46704f-03b8-462b-8150-0edd723a5093]51274202-a4e1-4052-ab25-cc6cee83b3b8",
+    "timestamp": 1789685974625,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789685975960,
+    "eventId": "39911330905496067397131528861374387603837691896864505859"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-bc46704f-03b8-462b-8150-0edd723a5093]51274202-a4e1-4052-ab25-cc6cee83b3b8",
+    "timestamp": 1789685975126,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=fresh-discount-b3aa8e3f-08c7-4214-9645-c59d66617706 records=0",
+    "ingestionTime": 1789685975960,
+    "eventId": "39911330916668740741595371055283782458434521011360694278"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-bc46704f-03b8-462b-8150-0edd723a5093]51274202-a4e1-4052-ab25-cc6cee83b3b8",
+    "timestamp": 1789685979780,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=fresh-discount-b3aa8e3f-08c7-4214-9645-c59d66617706",
+    "ingestionTime": 1789685990830,
+    "eventId": "39911331020456408895556891173968186809592464544217890820"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-075f9c9b-70e6-4117-adf4-59dfb60c7a0f]4e07e986-f825-479c-9866-23d9b07b1c11",
+    "timestamp": 1789685989981,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789685991669,
+    "eventId": "39911331247946310665767777841788220989769556266031251459"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-075f9c9b-70e6-4117-adf4-59dfb60c7a0f]4e07e986-f825-479c-9866-23d9b07b1c11",
+    "timestamp": 1789685990499,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=fresh-browser-44a5675a-dfb0-4e63-8d15-180565643a95 records=0",
+    "ingestionTime": 1789685991669,
+    "eventId": "39911331259498096678606640629103723055001407526129106950"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-075f9c9b-70e6-4117-adf4-59dfb60c7a0f]4e07e986-f825-479c-9866-23d9b07b1c11",
+    "timestamp": 1789686012137,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=fresh-browser-44a5675a-dfb0-4e63-8d15-180565643a95",
+    "ingestionTime": 1789686019451,
+    "eventId": "39911331742041621284412264199240093251243305058895790082"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-fce96b3c-b4d4-485e-bbe0-8a57ceed7e48]871ed672-4e8e-45f7-9cc9-079b872137c3",
+    "timestamp": 1789686023440,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789686024540,
+    "eventId": "39911331994106944263403897574170230865779229900056297472"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-fce96b3c-b4d4-485e-bbe0-8a57ceed7e48]871ed672-4e8e-45f7-9cc9-079b872137c3",
+    "timestamp": 1789686023931,
+    "message": "INFO:customer_support:Memory retrieval: actor=FINAL-CUST-123 session=fresh-memory_b-6c3e6b90-5fc2-45c1-8b28-d0449e38adff records=0",
+    "ingestionTime": 1789686024540,
+    "eventId": "39911332005056610155882433536664268537649575399492681731"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-fce96b3c-b4d4-485e-bbe0-8a57ceed7e48]871ed672-4e8e-45f7-9cc9-079b872137c3",
+    "timestamp": 1789686026758,
+    "message": "INFO:customer_support:Memory saved: actor=FINAL-CUST-123 session=fresh-memory_b-6c3e6b90-5fc2-45c1-8b28-d0449e38adff",
+    "ingestionTime": 1789686028076,
+    "eventId": "39911332068100816832128505162060576611969634228916322307"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-3ccef130-9725-4f0b-8228-5adc13845e84]f6a8b14c-4d01-4cb4-80a3-dc07a7192fa1",
+    "timestamp": 1789686037932,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789686038141,
+    "eventId": "39911332317289343680509688157748778766211185053434118151"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-3ccef130-9725-4f0b-8228-5adc13845e84]f6a8b14c-4d01-4cb4-80a3-dc07a7192fa1",
+    "timestamp": 1789686038400,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=t1 records=2",
+    "ingestionTime": 1789686039233,
+    "eventId": "39911332327726092433422019789307584577229235779228336130"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-3ccef130-9725-4f0b-8228-5adc13845e84]f6a8b14c-4d01-4cb4-80a3-dc07a7192fa1",
+    "timestamp": 1789686040305,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=t1",
+    "ingestionTime": 1789686041710,
+    "eventId": "39911332370209012036622856876927783608848584749368934400"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-3ccef130-9725-4f0b-8228-5adc13845e84]f6a8b14c-4d01-4cb4-80a3-dc07a7192fa1",
+    "timestamp": 1789686046150,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789686058076,
+    "eventId": "39911332500556867722034349158989121063199974593740537860"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-3ccef130-9725-4f0b-8228-5adc13845e84]f6a8b14c-4d01-4cb4-80a3-dc07a7192fa1",
+    "timestamp": 1789686046584,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=t3 records=2",
+    "ingestionTime": 1789686058076,
+    "eventId": "39911332510235391138196639602415622793529363487336038407"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-3ccef130-9725-4f0b-8228-5adc13845e84]f6a8b14c-4d01-4cb4-80a3-dc07a7192fa1",
+    "timestamp": 1789686048951,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=t3",
+    "ingestionTime": 1789686058076,
+    "eventId": "39911332563021255023118624578430667944888035171991683092"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-bade2542-8416-4268-a281-2d09773f048b]43685032-cbb0-4e4b-8995-13cd121c7670",
+    "timestamp": 1789686074253,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789686074381,
+    "eventId": "39911333127274710036340451325279062639092639415435919368"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-bade2542-8416-4268-a281-2d09773f048b]43685032-cbb0-4e4b-8995-13cd121c7670",
+    "timestamp": 1789686074744,
+    "message": "INFO:customer_support:Memory retrieval: actor=FINAL-CUST-123 session=fresh-memory_b-ee5fcc03-50e4-457b-8d62-34cd1658355a records=3",
+    "ingestionTime": 1789686075874,
+    "eventId": "39911333138224375928818987289578056908599151116085231618"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-bade2542-8416-4268-a281-2d09773f048b]43685032-cbb0-4e4b-8995-13cd121c7670",
+    "timestamp": 1789686075871,
+    "message": "INFO:customer_support:Memory saved: actor=FINAL-CUST-123 session=fresh-memory_b-ee5fcc03-50e4-457b-8d62-34cd1658355a",
+    "ingestionTime": 1789686077276,
+    "eventId": "39911333163357315767562999571783436634488014608524771328"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-6424998b-b145-4bd0-99dd-fff1f4872604]bb34bc90-3389-4a59-b03c-bc5315e1466f",
+    "timestamp": 1789686110427,
+    "message": "INFO:customer_support:Gateway connected successfully. Loaded 6 tools.",
+    "ingestionTime": 1789686110925,
+    "eventId": "39911333933981866847987212891370895358111842948046913542"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-6424998b-b145-4bd0-99dd-fff1f4872604]bb34bc90-3389-4a59-b03c-bc5315e1466f",
+    "timestamp": 1789686110922,
+    "message": "INFO:customer_support:Memory retrieval: actor=CUST-123 session=fresh-rag_guard-e645ce0e-7906-44c6-829f-d3fff5919122 records=7",
+    "ingestionTime": 1789686112328,
+    "eventId": "39911333945020735721259871348127031869784401353700474880"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-6424998b-b145-4bd0-99dd-fff1f4872604]bb34bc90-3389-4a59-b03c-bc5315e1466f",
+    "timestamp": 1789686113707,
+    "message": "INFO:customer_support:Memory saved: actor=CUST-123 session=fresh-rag_guard-e645ce0e-7906-44c6-829f-d3fff5919122",
+    "ingestionTime": 1789686116302,
+    "eventId": "39911334007128311099167656802108459312349072728552964097"
+  },
+  {
+    "logStreamName": "2026/09/17/[runtime-logs-5a2f6d07-1048-4f0f-b96e-d279657b8b73]ec764668-bc33-4364-8a1b-cf6cdfbd620f",
+    "timestamp": 1789686196289,
+    "message": "ERROR:customer_support:Gateway tool loading failed",
+    "ingestionTime": 1789686198571,
+    "eventId": "39911335848768451084223577175868486197454188100869292151"
+  }
+]

@@ -1,0 +1,103 @@
+{
+  "checked_utc": "2026-09-17T23:09:47.092569+00:00",
+  "account": "166977155856",
+  "checks": [
+    {
+      "resource": "runtime",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "gateway",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "memory",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "api",
+      "absent": true,
+      "error_code": "NotFoundException"
+    },
+    {
+      "resource": "knowledge_base",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "runtime_bucket",
+      "absent": true,
+      "error_code": "404"
+    },
+    {
+      "resource": "bucket",
+      "absent": true,
+      "error_code": "404"
+    },
+    {
+      "resource": "order_tracker",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "refund_processor",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "lambda_role",
+      "absent": true,
+      "error_code": "NoSuchEntity"
+    },
+    {
+      "resource": "gateway_role",
+      "absent": true,
+      "error_code": "NoSuchEntity"
+    },
+    {
+      "resource": "runtime_role",
+      "absent": true,
+      "error_code": "NoSuchEntity"
+    },
+    {
+      "resource": "knowledge-base_role",
+      "absent": true,
+      "error_code": "NoSuchEntity"
+    },
+    {
+      "resource": "aoss_encryption",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "aoss_network",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "aoss_data",
+      "absent": true,
+      "error_code": "ResourceNotFoundException"
+    },
+    {
+      "resource": "vector_collection",
+      "absent": true
+    },
+    {
+      "resource": "/aws/bedrock-agentcore/runtimes/udacity_support_p02_rag_final-J3LfIlBY56-DEFAULT",
+      "absent": true
+    },
+    {
+      "resource": "/aws/lambda/udacity-p02-rag-final-order-tracker",
+      "absent": true
+    },
+    {
+      "resource": "/aws/lambda/udacity-p02-rag-final-refund-processor",
+      "absent": true
+    }
+  ],
+  "cleanup_verified": true
+}

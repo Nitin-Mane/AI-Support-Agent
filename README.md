@@ -1,21 +1,24 @@
 # AI Support Agent
 
-September 17 reviewer corrections are documented in [REVISION_NOTES.md](REVISION_NOTES.md).
-The revised source passes 33 local tests and was freshly deployed to the Udacity
-sandbox on September 17. **Five of six live scenarios passed.** Both reviewer
-corrections passed cloud checks: the missing KB configuration message and an
-actionable response to a deployed dummy Gateway URL, with CloudWatch logging.
-Successful RAG remains blocked by the sandbox's `aoss:CreateSecurityPolicy`
-permission. See [fresh deployment evidence](examples/cloud_revision/README.md)
-and [verification results](examples/cloud_revision/verification.json).
-The original scenario records below are historical evidence; their personal-account
-RAG record identifies a Knowledge Base rather than an AgentCore Runtime.
-Udacity re-review remains pending.
+**September 18, 2026: all six required live scenarios passed** through one fresh
+AgentCore Runtime in the user-authorized personal AWS account. The uploaded
+`main.py` matches the repository byte for byte. Both reviewer corrections passed
+deployed tests: a descriptive missing-KB message and safe dummy-Gateway failure
+handling with CloudWatch logging. Order and Platinum RAG commands also passed
+through `agentcore invoke` with exit code 0. The local suite passed 33 tests.
 
-The [rubric and submission checklist](docs/submission_checklist.md) maps every
-requirement and reviewer correction to its source and evidence files.
+See [complete deployment evidence](examples/cloud_final/README.md),
+[verification results](examples/cloud_final/verification.json), and the
+[rubric checklist](docs/submission_checklist.md). The sandbox still denies vector
+store provisioning; the authorized personal account was used for the complete
+test run, and this departure from the sandbox setup instruction is disclosed.
+Temporary test resources were removed and independently checked. **Udacity
+re-review remains pending; the revised package has not been uploaded.**
 
-![Fresh AWS testing outcomes](examples/cloud_revision/cloud_outcomes.jpg)
+The September 17 sandbox results and the original panels below are preserved as
+historical evidence. They are not substituted for the complete deployment run.
+
+![Fresh deployed RAG outcome](examples/cloud_final/rag_outcome.jpg)
 
 A cloud-native customer support platform built with the **Strands SDK** and **Amazon Bedrock AgentCore Runtime**, orchestrated with **Amazon Nova 2 Lite**. The agent integrates real-time order tracking, transactional refund processing via Model Context Protocol (MCP) Gateway microservices, semantic knowledge base retrieval (RAG) over Amazon OpenSearch Serverless, long-term cross-session memory, deterministic financial code execution, and headless browser automation.
 
@@ -218,8 +221,23 @@ configured memory through its hooks. The recorded sandbox deployment used
 ordinary CloudWatch logs with toolkit OpenTelemetry instrumentation disabled.
 
 Run all six course scenarios after deployment. The
-[rubric checklist](docs/submission_checklist.md) identifies the remaining RAG
-test and links the measured outputs. Remove the temporary resources after capture.
+[rubric checklist](docs/submission_checklist.md) links the measured outputs
+and the reviewer correction tests. Remove the temporary resources after capture.
+
+For a manually created OpenSearch Serverless collection, the optional
+[`create_catalog_index.py`](scripts/create_catalog_index.py) helper creates the
+1024-dimension Titan V2 index with `vector`, `text` and `metadata` fields:
+
+```powershell
+python scripts/create_catalog_index.py --endpoint https://COLLECTION_ID.us-east-1.aoss.amazonaws.com
+```
+
+Replace `COLLECTION_ID` with the actual endpoint identifier. The helper uses the
+standard AWS credential chain and includes the signed `x-amz-content-sha256`
+payload hash required by [OpenSearch Serverless](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-clients.html).
+It does not create the collection, Knowledge Base or access policies. Configure
+the Knowledge Base field mapping to match, then sync `product_catalog.txt` before
+invoking the RAG scenario.
 
 ### Running the Test Suite
 The repository includes 33 local tests covering discount arithmetic, memory hooks,

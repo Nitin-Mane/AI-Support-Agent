@@ -1,0 +1,8 @@
+{
+  "status": "resolved_with_authorized_personal_account",
+  "account": "166977155856",
+  "region": "us-east-1",
+  "sandbox_limitation": "aoss:CreateSecurityPolicy remains denied in the Udacity sandbox; no sandbox IAM permissions were changed",
+  "kb_id": "SERRQU6EHG",
+  "ingestion_status": "COMPLETE"
+}

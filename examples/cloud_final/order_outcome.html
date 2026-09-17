@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Order tracking</title><style>body{margin:0;background:#edf1f5;color:#17283c;font:16px Arial,sans-serif}
+main{box-sizing:border-box;width:1100px;margin:24px auto;padding:30px;background:white;border:1px solid #d2dbe4;border-radius:12px}
+h1{font-size:27px;margin:0 0 12px}h2{font-size:19px;margin:22px 0 10px}
+.meta,.foot{color:#52687c;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.badge{background:#e6f3ea;color:#14643e;font-weight:bold;padding:12px 15px;margin:18px 0}
+.box,pre{background:#f6f8fa;border-left:4px solid #278158;padding:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
+pre{font:14px Consolas,monospace;line-height:1.55}table{border-collapse:collapse;width:100%}
+td,th{padding:12px;text-align:left;border-bottom:1px solid #dfe5eb}th{background:#f0f3f7}
+.pass{color:#14643e;font-weight:bold}</style><main id="outcome"><h1>Order tracking</h1><div class="meta">arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56<br>2026-09-17T22:59:09.059637+00:00 | us-east-1 | HTTP 200 | runtime version 1</div><div class="badge">VERIFIED AWS RESPONSE</div><h2>Request</h2><div class="box">Can you track order ORD-001?</div><h2>Agent response</h2><pre>I&#x27;ve retrieved the details for order ORD-001:
+
+**Order Status:** SHIPPED
+**Customer:** CUST-123
+**Items:**
+- Wireless Headphones Pro (1 x $89.99)
+
+**Total:** $89.99
+**Carrier:** UPS
+**Tracking Number:** TRK987654321
+**Estimated Delivery:** September 19, 2026
+
+The order is currently in transit and expected to be delivered by September 19th. Would you like me to help with anything else regarding this order?</pre><p class="foot">Source: order.json — saved output of the actual deployed AgentCore Runtime invocation. This panel displays recorded results; it is not the AWS console.</p></main></html>

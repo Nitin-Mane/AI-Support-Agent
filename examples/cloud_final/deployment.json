@@ -1,0 +1,54 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "8de90946-67c0-44fe-a0e3-f1a354837b84",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Thu, 17 Sep 2026 22:58:04 GMT",
+      "content-type": "application/json",
+      "content-length": "1152",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "8de90946-67c0-44fe-a0e3-f1a354837b84",
+      "x-amz-apigw-id": "D3aDjEixIAMEu8g=",
+      "x-amzn-trace-id": "Root=1-6aac707c-2be2193116252ba3307514ce"
+    },
+    "RetryAttempts": 0
+  },
+  "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56",
+  "agentRuntimeName": "udacity_support_p02_rag_final",
+  "agentRuntimeId": "udacity_support_p02_rag_final-J3LfIlBY56",
+  "agentRuntimeVersion": "1",
+  "createdAt": "2026-09-17 22:57:36.899487+00:00",
+  "lastUpdatedAt": "2026-09-17 22:57:52.402055+00:00",
+  "roleArn": "arn:aws:iam::166977155856:role/udacity-p02-rag-final-runtime",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "status": "READY",
+  "lifecycleConfiguration": {
+    "idleRuntimeSessionTimeout": 900,
+    "maxLifetime": 28800
+  },
+  "workloadIdentityDetails": {
+    "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:workload-identity-directory/default/workload-identity/udacity_support_p02_rag_final-J3LfIlBY56"
+  },
+  "agentRuntimeArtifact": {
+    "codeConfiguration": {
+      "code": {
+        "s3": {
+          "bucket": "udacity-p02-rag-final-runtime-166977155856",
+          "prefix": "udacity_support_p02_rag_final/deployment.zip"
+        }
+      },
+      "runtime": "PYTHON_3_13",
+      "entryPoint": [
+        "main.py"
+      ]
+    }
+  },
+  "protocolConfiguration": {
+    "serverProtocol": "HTTP"
+  },
+  "metadataConfiguration": {
+    "requireMMDSV2": true
+  }
+}

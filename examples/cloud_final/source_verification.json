@@ -1,0 +1,13 @@
+{
+  "checked_utc": "2026-09-17T22:58:19.545051+00:00",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56",
+  "uploaded_main_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "current_main_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "source_matches": true,
+  "uploaded_config": {
+    "REGION": "us-east-1",
+    "GATEWAY_URL": "https://customersupportgatewayragfinal-xu7h87lk9i.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+    "KB_ID": "SERRQU6EHG",
+    "MEMORY_ID": "CustomerSupportMemoryRagFinal-g8rnN6Bqdy"
+  }
+}

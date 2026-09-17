@@ -100,3 +100,38 @@ The unused memory display name was cleared from the configuration template to
 avoid treating it as a real Memory ID. Memory persistence documentation now
 accurately distinguishes the synchronous save hook from asynchronous extraction.
 Successful deployed RAG remains pending; the package has not been resubmitted.
+
+
+## Complete personal-account deployment — September 18, 2026
+
+The earlier RAG blocker is resolved for testing through the explicitly
+authorized personal AWS account `166977155856`, in `us-east-1`. The sandbox's
+vector-store IAM restrictions were not modified. To provide one complete test
+run, Gateway API and Lambda targets, Memory, the synced Titan V2/OpenSearch
+Knowledge Base and AgentCore Runtime were provisioned together.
+
+The custom index-creation request initially returned HTTP 403 because it omitted
+`x-amz-content-sha256`. Signing the exact JSON bytes with their payload hash
+resolved that provisioning issue without expanding permissions. A credential-
+chain based helper is included as `scripts/create_catalog_index.py`; its live
+duplicate-index check is preserved. Catalog ingestion completed with no failed
+documents, and the deployed RAG tool returned all three Platinum benefits.
+
+All six required positive scenarios passed on runtime
+`udacity_support_p02_rag_final-J3LfIlBY56`, version 1. The uploaded `main.py`
+matches current source. Both the order and RAG CLI commands exited 0. Memory
+recall passed after extraction became searchable; the early unsuccessful recall
+is preserved. Browser navigation recovered from one invalid session name.
+
+Version 2 tested an empty `KB_ID`; version 3 tested a closed dummy Gateway URL;
+version 4 restored the valid configuration. Both reviewer corrections and
+success/failure logging passed the recorded-response audit. A temporary token
+expired during orchestration and was refreshed through the signed-in CloudShell
+session; successful scenario records were preserved.
+
+The local suite passed 33 tests (one upstream deprecation warning). Current
+evidence, outcome panels, screenshots and cleanup records are in
+`examples/cloud_final/`. The evidence checker defaults to this complete run and
+reports `submission_ready: true` for its technical checks. The revised ZIP is
+Revision 03. Original source assets and earlier evidence remain preserved.
+Udacity has not received this revised package, and acceptance remains pending.

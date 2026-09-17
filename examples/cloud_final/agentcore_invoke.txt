@@ -1,0 +1,20 @@
+┌───────────────────────────────────────────────────────────────────────── udacity_support_p02_rag_final ─────────────────────────────────────────────────────────────────────────┐
+│ Session: 3ccef130-9725-4f0b-8228-5adc13845e84                                                                                                                                   │
+│ Request ID: e5c6d97c-c978-4a65-a278-a2b5de5963e8                                                                                                                                │
+│ ARN: arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56                                                                          │
+│ Logs: aws logs tail /aws/bedrock-agentcore/runtimes/udacity_support_p02_rag_final-J3LfIlBY56-DEFAULT --log-stream-name-prefix "2026/09/17/[runtime-logs" --follow               │
+│       aws logs tail /aws/bedrock-agentcore/runtimes/udacity_support_p02_rag_final-J3LfIlBY56-DEFAULT --log-stream-name-prefix "2026/09/17/[runtime-logs" --since 1h             │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Response:
+Here is the current status of your order **ORD-001**:
+
+- **Status:** SHIPPED  
+- **Items:**  
+  - Wireless Headphones Pro (1 unit at $89.99)  
+- **Total:** $89.99  
+- **Carrier:** UPS  
+- **Tracking Number:** TRK987654321  
+- **Estimated Delivery:** September 19, 2026  
+
+Your order is on its way and expected to arrive by the estimated delivery date. If you have any further questions or need assistance, feel free to ask!

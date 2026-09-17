@@ -1,0 +1,97 @@
+{
+  "started_utc": "2026-09-17T22:59:24.805628+00:00",
+  "scenario": "discount",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56",
+  "runtime_version": "1",
+  "source_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "runtime_session_id": "bc46704f-03b8-462b-8150-0edd723a5093",
+  "input": {
+    "prompt": "I am a Gold member with 4250 points. Calculate my discount on a $150 standard order.",
+    "customer_id": "CUST-123",
+    "session_id": "fresh-discount-b3aa8e3f-08c7-4214-9645-c59d66617706"
+  },
+  "http_status": 200,
+  "output": {
+    "response": "Discount calculation:\n{\n  \"points_redeemed\": 4000,\n  \"points_discount\": 40.0,\n  \"tier_discount_pct\": 10.0,\n  \"tier_discount\": 11.0,\n  \"final_total\": 99.0,\n  \"total_savings\": 51.0,\n  \"points_earned\": 99,\n  \"remaining_points\": 349,\n  \"calculation_mode\": \"code_interpreter\"\n}",
+    "customer_id": "CUST-123",
+    "session_id": "fresh-discount-b3aa8e3f-08c7-4214-9645-c59d66617706",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "text": "I am a Gold member with 4250 points. Calculate my discount on a $150 standard order."
+          }
+        ],
+        "tracking_id": "c4c4d777-9e3c-423a-8e15-56f0913aa180"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "toolUse": {
+              "toolUseId": "tooluse_XQROsOAa7D92HLafiA8rHD",
+              "name": "calculate_loyalty_discount",
+              "input": {
+                "order_total": 150.0,
+                "loyalty_points": 4250,
+                "tier": "Gold",
+                "product_category": "standard"
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "usage": {
+            "inputTokens": 5792,
+            "outputTokens": 67,
+            "totalTokens": 5859
+          },
+          "metrics": {
+            "latencyMs": 805,
+            "timeToFirstByteMs": 827
+          }
+        },
+        "tracking_id": "75a32ac7-fdba-4740-a650-39a6dfbe23c0"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "toolResult": {
+              "toolUseId": "tooluse_XQROsOAa7D92HLafiA8rHD",
+              "status": "success",
+              "content": [
+                {
+                  "text": "{\"points_redeemed\":4000,\"points_discount\":40.0,\"tier_discount_pct\":10.0,\"tier_discount\":11.0,\"final_total\":99.0,\"total_savings\":51.0,\"points_earned\":99,\"remaining_points\":349,\"calculation_mode\":\"code_interpreter\"}"
+                }
+              ]
+            }
+          }
+        ],
+        "tracking_id": "b397b852-f799-4407-851e-020ae1a44171"
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "text": "Discount calculation:\n{\n  \"points_redeemed\": 4000,\n  \"points_discount\": 40.0,\n  \"tier_discount_pct\": 10.0,\n  \"tier_discount\": 11.0,\n  \"final_total\": 99.0,\n  \"total_savings\": 51.0,\n  \"points_earned\": 99,\n  \"remaining_points\": 349,\n  \"calculation_mode\": \"code_interpreter\"\n}"
+          }
+        ],
+        "metadata": {
+          "usage": {
+            "inputTokens": 5952,
+            "outputTokens": 127,
+            "totalTokens": 6079
+          },
+          "metrics": {
+            "latencyMs": 944,
+            "timeToFirstByteMs": 479
+          }
+        },
+        "tracking_id": "5f2bc31e-28cd-43fb-9f2f-9802f2ef93bc"
+      }
+    ]
+  },
+  "completed_utc": "2026-09-17T22:59:39.951459+00:00"
+}

@@ -26,7 +26,7 @@ artifact. `memory_b_initial.json` preserves an unsuccessful early recall.
 
 `verification.json` reports **5/6 scenarios passed**, both reviewer corrections
 verified in AWS, and `submission_ready: false`. Run
-`python scripts/verify_cloud_revision.py` to independently check these saved
+`python scripts/verify_cloud_revision.py --directory examples/cloud_revision` to independently check these saved
 records. This command does not create a deployment or perform new invocations.
 
 `runtime_ready.jpg` is a cursor-free crop of the AWS console panel.
@@ -52,3 +52,11 @@ and independent cleanup checks are in `cli_cleanup*.json`.
 
 [The rubric checklist](../../docs/submission_checklist.md) maps every criterion
 to its implementation and evidence. Successful deployed RAG remains pending.
+
+
+## Resolved in the complete September 18 run
+
+These September 17 results remain unchanged. Successful deployed RAG and all
+six scenarios are now verified in the expressly authorized personal account.
+Use [the complete run](../cloud_final/README.md) for the current submission;
+the checker defaults to that evidence directory.

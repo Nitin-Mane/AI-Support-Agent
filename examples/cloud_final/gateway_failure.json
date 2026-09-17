@@ -1,0 +1,20 @@
+{
+  "started_utc": "2026-09-17T23:03:08.774603+00:00",
+  "scenario": "gateway_failure",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:166977155856:runtime/udacity_support_p02_rag_final-J3LfIlBY56",
+  "runtime_version": "3",
+  "source_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "runtime_session_id": "5a2f6d07-1048-4f0f-b96e-d279657b8b73",
+  "input": {
+    "prompt": "Can you track order ORD-001?",
+    "customer_id": "CUST-123",
+    "session_id": "fresh-gateway_failure-7cffb907-a581-4c1d-a48d-37eadcb85f82"
+  },
+  "http_status": 200,
+  "output": {
+    "error_code": "GATEWAY_UNAVAILABLE",
+    "error": "The support Gateway is unavailable, so this request could not be completed. Please retry shortly. If the problem persists, ask the administrator to check the Gateway endpoint, target status and runtime logs.",
+    "session_id": "fresh-gateway_failure-7cffb907-a581-4c1d-a48d-37eadcb85f82"
+  },
+  "completed_utc": "2026-09-17T23:03:16.448680+00:00"
+}

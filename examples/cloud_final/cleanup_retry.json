@@ -1,0 +1,56 @@
+{
+  "checked_utc": "2026-09-17T23:07:21.401181+00:00",
+  "reason": "The entire vector collection was already verified absent, so the datasource deletion could no longer reach it. Set RETAIN for the absent vector store and retry removal of KB metadata. No vector data remains.",
+  "data_source_update": {
+    "ResponseMetadata": {
+      "RequestId": "5bc24e7e-cc20-4ce4-b3db-bd48112a232e",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Thu, 17 Sep 2026 23:07:20 GMT",
+        "content-type": "application/json",
+        "content-length": "674",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "5bc24e7e-cc20-4ce4-b3db-bd48112a232e",
+        "x-amz-apigw-id": "D3baaGrtoAMEZ_Q=",
+        "x-amzn-trace-id": "Root=1-6aac72a8-186327632533e7731ba0f099"
+      },
+      "RetryAttempts": 0
+    },
+    "dataSource": {
+      "knowledgeBaseId": "SERRQU6EHG",
+      "dataSourceId": "1DY4I5E9DS",
+      "name": "product-catalog",
+      "status": "DELETE_UNSUCCESSFUL",
+      "dataSourceConfiguration": {
+        "type": "S3",
+        "s3Configuration": {
+          "bucketArn": "arn:aws:s3:::udacity-p02-rag-final-catalog-166977155856"
+        }
+      },
+      "dataDeletionPolicy": "RETAIN",
+      "createdAt": "2026-09-17 22:56:24.552339+00:00",
+      "updatedAt": "2026-09-17 23:07:20.586519+00:00",
+      "failureReasons": [
+        "Unable to delete data from vector store for data source with ID 1DY4I5E9DS. Check your vector store configurations and permissions and retry your request. If the issue persists, consider updating the dataDeletionPolicy of the data source to RETAIN and retry your request."
+      ]
+    }
+  },
+  "kb_delete_retry": {
+    "ResponseMetadata": {
+      "RequestId": "1109e4d9-ae0d-430e-a5af-d788207aca3e",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Thu, 17 Sep 2026 23:07:21 GMT",
+        "content-type": "application/json",
+        "content-length": "52",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "1109e4d9-ae0d-430e-a5af-d788207aca3e",
+        "x-amz-apigw-id": "D3badFhIoAMEEHg=",
+        "x-amzn-trace-id": "Root=1-6aac72a8-130785e502689ed2615148b5"
+      },
+      "RetryAttempts": 0
+    },
+    "knowledgeBaseId": "SERRQU6EHG",
+    "status": "DELETING"
+  }
+}
