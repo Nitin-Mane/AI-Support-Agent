@@ -67,6 +67,7 @@ audit = {
     "revised_source_deployed": cloud.get("uploaded_source_matches_current", False),
     "fresh_cloud_scenarios_passed": cloud.get("scenarios_passed", 0),
     "fresh_cloud_total_scenarios": cloud.get("total_scenarios", 6),
+    "fresh_agentcore_cli_passed": cloud.get("deployment_cli_evidence", {}).get("passed", False),
     "submission_ready": cloud.get("submission_ready", False),
     "udacity_acceptance": "Pending re-review; this package has not been submitted",
 }

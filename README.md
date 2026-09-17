@@ -12,6 +12,9 @@ The original scenario records below are historical evidence; their personal-acco
 RAG record identifies a Knowledge Base rather than an AgentCore Runtime.
 Udacity re-review remains pending.
 
+The [rubric and submission checklist](docs/submission_checklist.md) maps every
+requirement and reviewer correction to its source and evidence files.
+
 ![Fresh AWS testing outcomes](examples/cloud_revision/cloud_outcomes.jpg)
 
 A cloud-native customer support platform built with the **Strands SDK** and **Amazon Bedrock AgentCore Runtime**, orchestrated with **Amazon Nova 2 Lite**. The agent integrates real-time order tracking, transactional refund processing via Model Context Protocol (MCP) Gateway microservices, semantic knowledge base retrieval (RAG) over Amazon OpenSearch Serverless, long-term cross-session memory, deterministic financial code execution, and headless browser automation.
@@ -177,6 +180,47 @@ pip install -r requirements.txt
 pip install pytest anyio
 ```
 
+### Cloud Setup and Deployment
+
+Install the deployment CLI used for the recorded coursework checks:
+
+```bash
+pip install bedrock-agentcore-starter-toolkit==0.3.12
+```
+
+Use the Udacity sandbox credentials, including their temporary session token,
+and verify the selected account with `aws sts get-caller-identity`. Follow the
+course Environment Setup to create the two Lambda functions, REST API, Gateway,
+synced Knowledge Base and memory strategies in `us-east-1`. API methods need a
+200 response model before Gateway imports their schemas.
+
+Fill `config.json` with the actual Gateway URL, Knowledge Base ID and Memory ID.
+The memory resource's generated ID is required; its display name is insufficient.
+The packaged file is an empty configuration template because test resources were
+deleted after evidence capture. Environment variables `GATEWAY_URL`, `KB_ID`,
+`MEMORY_ID` and `AWS_REGION` can override these settings.
+
+Stage `main.py`, `requirements.txt` and the completed `config.json` in a separate
+deployment directory. Configure from that directory with the runtime execution
+role and a private source bucket:
+
+```bash
+agentcore configure --entrypoint main.py --name support_agent --deployment-type direct_code_deploy --runtime PYTHON_3_13 --execution-role <runtime-role-arn> --s3 <private-source-bucket> --region us-east-1 --disable-memory --disable-otel --non-interactive
+agentcore deploy
+agentcore invoke '{"prompt":"Can you track order ORD-001?","customer_id":"CUST-123","session_id":"t1"}'
+```
+
+The runtime role must permit Nova model invocation, Knowledge Base retrieval,
+memory retrieval and event creation, Code Interpreter and Browser sessions,
+Browser automation streams, and CloudWatch logging. `--disable-memory` prevents
+the toolkit from creating another memory resource; the application uses the
+configured memory through its hooks. The recorded sandbox deployment used
+ordinary CloudWatch logs with toolkit OpenTelemetry instrumentation disabled.
+
+Run all six course scenarios after deployment. The
+[rubric checklist](docs/submission_checklist.md) identifies the remaining RAG
+test and links the measured outputs. Remove the temporary resources after capture.
+
 ### Running the Test Suite
 The repository includes 33 local tests covering discount arithmetic, memory hooks,
 Knowledge Base configuration guards, response enforcement, entrypoint validation,
@@ -206,7 +250,7 @@ python scripts/verify_review_failures.py
 ## Key Engineering Decisions
 
 - **Deterministic Financial Arithmetic**: Financial loyalty calculations are strictly executed in an isolated Python Code Interpreter sandbox rather than letting the LLM compute totals, preventing multi-step rounding errors.
-- **Defensive Memory Hooks**: Memory retrieval occurs prior to model invocation (`MessageAddedEvent`), while persistence (`AfterInvocationEvent`) is non-blocking to prevent memory service latency from degrading response time.
+- **Memory Hooks**: Memory retrieval runs before model invocation (`MessageAddedEvent`). Persistence runs after invocation (`AfterInvocationEvent`) and logs save failures; memory extraction takes place asynchronously in AgentCore.
 - **Gateway failure handling**: The transport remains open throughout the agent turn. If connection or discovery fails, or no tools are returned, the request stops with a useful retry message and diagnostic server logging.
 
 For deeper technical analysis, refer to [docs/design_decisions.md](docs/design_decisions.md) and the [Engineering Reflection](REFLECTION.md).

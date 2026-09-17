@@ -1,0 +1,28 @@
+{
+  "checked_utc": "2026-09-17T18:09:30.792858+00:00",
+  "source_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "reflection_body_words": 293,
+  "checks": {
+    "module_level_app": true,
+    "async_entrypoint": true,
+    "app_run": true,
+    "memory_hook_provider": true,
+    "rag_tool_decorator": true,
+    "rag_docstring": true,
+    "discount_tool_decorator": true,
+    "no_pass_statements": true,
+    "starter_order_tracker_unchanged": true,
+    "starter_refund_processor_unchanged": true,
+    "reflection_200_to_400_words": true
+  },
+  "all_structural_checks_passed": true,
+  "scope": "Local structural verification and comparison with the preserved starter; cloud checks are separate",
+  "local_test_suite": {
+    "command": "python -m pytest tests -q",
+    "passed": 33,
+    "warnings": 1,
+    "duration_seconds": 10.61,
+    "exit_code": 0,
+    "scope": "Full local suite rerun after the configuration template correction; AWS services are replaced by test doubles"
+  }
+}

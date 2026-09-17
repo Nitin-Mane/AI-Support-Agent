@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-17T18:02:34.344942+00:00",
+  "checked_utc": "2026-09-17T18:14:04.736570+00:00",
   "scope": "Fresh AWS invocation records from September 17, 2026; verification reads saved responses",
   "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:runtime/udacity_support_p02_rev2-uE9Qrh46hn",
   "runtime_versions": {
@@ -33,6 +33,12 @@
     "well_formed_gateway_responses": true
   },
   "browser_recovered_validation_errors": 1,
+  "deployment_cli_evidence": {
+    "passed": true,
+    "runtime_arn": "arn:aws:bedrock-agentcore:us-east-1:090165623118:runtime/udacity_support_p02_cli_check-bfrOHzDjY7",
+    "record": "agentcore_invoke.json",
+    "output": "agentcore_invoke.txt"
+  },
   "rag_blocker": {
     "checked_utc": "2026-09-17T17:55:08.166238+00:00",
     "account": "090165623118",

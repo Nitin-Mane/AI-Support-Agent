@@ -81,6 +81,13 @@ def verify():
             and any("Gateway tool loading failed" in e["message"] for e in logs),
         "well_formed_gateway_responses": gateway_ok,
     }
+    cli_path = DIRECTORY / "agentcore_invoke.json"
+    cli = json.loads(cli_path.read_text(encoding="utf-8")) if cli_path.exists() else {}
+    cli_text_path = DIRECTORY / "agentcore_invoke.txt"
+    cli_text = cli_text_path.read_text(encoding="utf-8") if cli_text_path.exists() else ""
+    cli_ok = (cli.get("exit_code") == 0 and cli.get("uploaded_main_sha256") == digest
+              and cli.get("runtime_arn", "missing ARN") in cli_text
+              and "TRK987654321" in cli_text and "UPS" in cli_text)
     report = {
         "checked_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "Fresh AWS invocation records from September 17, 2026; verification reads saved responses",
@@ -91,9 +98,11 @@ def verify():
         "scenarios_passed": sum(scenarios.values()), "total_scenarios": 6,
         "scenarios": scenarios, "reviewer_corrections": corrections,
         "browser_recovered_validation_errors": sum(not successful(r) for r in browser_results),
+        "deployment_cli_evidence": {"passed": cli_ok, "runtime_arn": cli.get("runtime_arn"),
+                                    "record": "agentcore_invoke.json", "output": "agentcore_invoke.txt"},
         "rag_blocker": load("rag_permission"),
         "submission_ready": same_source and same_runtime and http_ok
-            and all(scenarios.values()) and all(corrections.values()),
+            and all(scenarios.values()) and all(corrections.values()) and cli_ok,
     }
     (DIRECTORY / "verification.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))

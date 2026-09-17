@@ -37,3 +37,18 @@ independent absence checks are recorded alongside the results.
 Successful RAG through the revised deployed runtime is the remaining live check.
 The sandbox denied `aoss:CreateSecurityPolicy`; personal-account authentication
 must be restored to use the already authorized alternative.
+
+## Fresh CLI check after rubric re-review
+
+`agentcore_invoke.txt` is verbatim output from the course order-tracking command
+executed through `agentcore invoke` in a separate temporary sandbox runtime.
+`agentcore_invoke.json` records its timestamp, runtime ARN, exit code 0, expected
+UPS tracking details, and an uploaded-source hash matching the revised agent.
+The separate runtime makes the CLI check independently identifiable without
+changing the original fresh scenario records. Its resource deletion requests
+and independent cleanup checks are in `cli_cleanup*.json`.
+
+![Fresh CLI outcome panel](cli_outcome.jpg)
+
+[The rubric checklist](../../docs/submission_checklist.md) maps every criterion
+to its implementation and evidence. Successful deployed RAG remains pending.

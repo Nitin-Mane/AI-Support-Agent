@@ -73,3 +73,30 @@ The temporary deployment was removed after recording evidence; see the cleanup
 records in `examples/cloud_revision`. Udacity acceptance remains pending, and no
 revised submission was uploaded. Successful RAG must be retested through an
 AgentCore Runtime after suitable AWS access is available.
+
+## Rubric recheck and fresh CLI evidence
+
+The live rubric, instructions, setup page and all reviewer sections were checked
+again on September 17. No additional missing agent implementation was found.
+The review still concerns the original submission and has not been regraded.
+[The submission checklist](docs/submission_checklist.md) maps every requirement
+to the revised code and evidence, distinguishing the RAG code criterion from
+the remaining successful RAG scenario required by the instructions.
+
+A separate temporary sandbox runtime executed the course order command through
+`agentcore invoke`, with exit code 0, UPS and `TRK987654321` in its response.
+Its uploaded source was verified against the current `main.py`. The command,
+verbatim CLI output and metadata are in `examples/cloud_revision/agentcore_invoke.*`.
+This closes the fresh CLI-evidence gap without relabeling the existing SDK traces.
+The additional test resources were cleaned up after recording the result.
+
+The full local suite again passed 33 tests with one dependency warning. The
+reflection has 293 body words, both Lambda files match the preserved starter,
+and no `pass` statements remain in the agent. Structural results are recorded
+in `examples/revision/rubric_recheck.json`.
+
+README now includes the deployment CLI installation and cloud setup workflow.
+The unused memory display name was cleared from the configuration template to
+avoid treating it as a real Memory ID. Memory persistence documentation now
+accurately distinguishes the synchronous save hook from asynchronous extraction.
+Successful deployed RAG remains pending; the package has not been resubmitted.
