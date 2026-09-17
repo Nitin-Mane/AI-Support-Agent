@@ -22,11 +22,26 @@ from bedrock_agentcore.memory import MemoryClient
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from bedrock_agentcore.tools.code_interpreter_client import code_session
 from mcp.client.streamable_http import streamable_http_client
+from pydantic import BaseModel, Field, ValidationError
 from strands import Agent, tool
 from strands.hooks import AfterInvocationEvent, HookProvider, MessageAddedEvent
 from strands.models import BedrockModel
 from strands.tools.mcp.mcp_client import MCPClient
 from strands_tools.browser import AgentCoreBrowser
+
+
+class DiscountCalculationResult(BaseModel):
+    """Structured validation schema for loyalty discount calculation outputs."""
+
+    points_redeemed: int = Field(ge=0, description="Total loyalty points redeemed")
+    points_discount: float = Field(ge=0.0, description="Dollar discount from redeemed points")
+    tier_discount_pct: float = Field(ge=0.0, le=100.0, description="Loyalty tier discount percentage")
+    tier_discount: float = Field(ge=0.0, description="Dollar discount from tier rate")
+    final_total: float = Field(ge=0.0, description="Net order total after all discounts")
+    total_savings: float = Field(ge=0.0, description="Combined savings from points and tier discount")
+    points_earned: int = Field(ge=0, description="New loyalty points earned on the paid balance")
+    remaining_points: int = Field(ge=0, description="Remaining loyalty points balance after redemption and earning")
+    calculation_mode: str = Field(description="Execution engine (code_interpreter or tier_only_fallback)")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("customer_support")
@@ -97,7 +112,11 @@ def verified_response(messages: list) -> str:
                     return (
                         "The discount could not be calculated: " + calculation["error"]
                     )
-                return "Discount calculation:\n" + json.dumps(calculation, indent=2)
+                try:
+                    validated = DiscountCalculationResult.model_validate(calculation)
+                    return "Discount calculation:\n" + validated.model_dump_json(indent=2)
+                except ValidationError:
+                    return "Discount calculation:\n" + json.dumps(calculation, indent=2)
             if name == "search_knowledge_base" and text in (
                 "Knowledge base not configured.",
                 "No relevant information was found in the knowledge base.",
@@ -311,16 +330,9 @@ print(json.dumps({'points_redeemed': redeemed, 'points_discount': float(points_d
                 stdout = structured.get("stdout") or "\n".join(
                     b.get("text", "") for b in result.get("content", [])
                 )
-                calculation = json.loads(stdout.strip())
-                required = {
-                    "points_redeemed",
-                    "tier_discount_pct",
-                    "final_total",
-                    "remaining_points",
-                }
-                if not required.issubset(calculation):
-                    raise ValueError("Incomplete calculation result.")
-                return json.dumps(calculation)
+                raw_calc = json.loads(stdout.strip())
+                validated = DiscountCalculationResult.model_validate(raw_calc)
+                return validated.model_dump_json()
         raise RuntimeError("Code Interpreter returned no result.")
     except Exception:
         logger.exception(
@@ -329,19 +341,18 @@ print(json.dumps({'points_redeemed': redeemed, 'points_discount': float(points_d
         discount = (amount * tiers[tier]).quantize(
             Decimal("0.01"), rounding=ROUND_HALF_UP
         )
-        return json.dumps(
-            {
-                "points_redeemed": 0,
-                "tier_discount_pct": float(tiers[tier] * 100),
-                "final_total": float(amount - discount),
-                "remaining_points": loyalty_points,
-                "tier_discount": float(discount),
-                "total_savings": float(discount),
-                "points_earned": 0,
-                "calculation_mode": "tier_only_fallback",
-                "notice": "Code Interpreter unavailable. Points redemption and earning were not calculated.",
-            }
+        fallback = DiscountCalculationResult(
+            points_redeemed=0,
+            points_discount=0.0,
+            tier_discount_pct=float(tiers[tier] * 100),
+            tier_discount=float(discount),
+            final_total=float(amount - discount),
+            total_savings=float(discount),
+            points_earned=0,
+            remaining_points=loyalty_points,
+            calculation_mode="tier_only_fallback",
         )
+        return fallback.model_dump_json()
 
 
 SYSTEM_PROMPT = """You are a professional customer support assistant for an e-commerce platform.
@@ -373,15 +384,13 @@ async def invoke(payload, context=None):
         for v in (actor_id, session_id)
     ):
         return {"error": "Customer and session identifiers contain invalid characters."}
-    missing = [
-        name
-        for name, value in {"GATEWAY_URL": GATEWAY_URL, "MEMORY_ID": MEMORY_ID}.items()
-        if not value
-    ]
-    if missing:
-        return {"error": "Missing configuration: " + ", ".join(missing)}
+    hooks = []
+    if MEMORY_ID:
+        try:
+            hooks.append(MemoryHook(actor_id, session_id, memory_client, MEMORY_ID))
+        except Exception as exc:
+            logger.warning("Memory initialization failed: %s; running without memory hook.", exc)
     try:
-        memory_hook = MemoryHook(actor_id, session_id, memory_client, MEMORY_ID)
         prepare_browser_driver()
         agent_core_browser = AgentCoreBrowser(region=REGION)
         tools = [
@@ -396,7 +405,7 @@ async def invoke(payload, context=None):
                     agent = Agent(
                         model=model,
                         tools=tools,
-                        hooks=[memory_hook],
+                        hooks=hooks,
                         system_prompt=SYSTEM_PROMPT + "\nCurrent customer: " + actor_id,
                     )
                     result = await agent.invoke_async(payload["prompt"])
@@ -414,7 +423,7 @@ async def invoke(payload, context=None):
         agent = Agent(
             model=model,
             tools=tools,
-            hooks=[memory_hook],
+            hooks=hooks,
             system_prompt=SYSTEM_PROMPT + "\nCurrent customer: " + actor_id,
         )
         result = await agent.invoke_async(payload["prompt"])

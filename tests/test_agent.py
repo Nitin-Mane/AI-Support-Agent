@@ -161,3 +161,28 @@ def test_kb_empty_results(monkeypatch):
     assert main.search_knowledge_base('nonexistent') == 'No relevant information was found in the knowledge base.'
 
 
+def test_pydantic_discount_result_validation():
+    from pydantic import ValidationError
+    valid_data = {
+        'points_redeemed': 4000,
+        'points_discount': 40.0,
+        'tier_discount_pct': 10.0,
+        'tier_discount': 11.0,
+        'final_total': 99.0,
+        'total_savings': 51.0,
+        'points_earned': 99,
+        'remaining_points': 349,
+        'calculation_mode': 'code_interpreter'
+    }
+    result = main.DiscountCalculationResult.model_validate(valid_data)
+    assert result.final_total == 99.0
+    assert result.points_redeemed == 4000
+
+    # Negative points should fail validation
+    invalid_data = valid_data.copy()
+    invalid_data['points_redeemed'] = -100
+    with pytest.raises(ValidationError):
+        main.DiscountCalculationResult.model_validate(invalid_data)
+
+
+
