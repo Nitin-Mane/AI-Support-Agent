@@ -106,7 +106,9 @@ def test_tool_results_do_not_trigger_memory_retrieval():
 
 def test_kb_joins_chunks_and_handles_missing_configuration(monkeypatch):
     monkeypatch.setattr(main, 'KB_ID', '')
-    assert main.search_knowledge_base('policy') == 'Knowledge base not configured.'
+    assert 'KB_ID is empty or missing' in main.search_knowledge_base('policy')
+    monkeypatch.setattr(main, 'KB_ID', '   ')
+    assert 'KB_ID is empty or missing' in main.search_knowledge_base('policy')
     monkeypatch.setattr(main, 'KB_ID', 'ABC1234567')
     client = Mock()
     client.retrieve.return_value = {'retrievalResults': [
@@ -183,6 +185,30 @@ def test_pydantic_discount_result_validation():
     invalid_data['points_redeemed'] = -100
     with pytest.raises(ValidationError):
         main.DiscountCalculationResult.model_validate(invalid_data)
+
+
+def test_gateway_connection_failures_handled_gracefully(monkeypatch, caplog):
+    import asyncio
+    import logging
+
+    class FailingGateway:
+        def __enter__(self):
+            return self
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            return False
+        def list_tools_sync(self):
+            raise ConnectionError("Connection refused to MCP gateway")
+
+    monkeypatch.setattr(main, "GATEWAY_URL", "http://dummy-gateway:8000")
+    monkeypatch.setattr(main, "gateway_client", FailingGateway())
+    monkeypatch.setattr(main, "MEMORY_ID", "")
+    monkeypatch.setattr(main, "Agent", Mock())
+
+    with caplog.at_level(logging.ERROR):
+        asyncio.run(main.invoke({"prompt": "track my order"}))
+
+    assert any("Gateway connection failed" in record.message for record in caplog.records)
+
 
 
 

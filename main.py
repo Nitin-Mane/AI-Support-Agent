@@ -45,6 +45,7 @@ class DiscountCalculationResult(BaseModel):
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("customer_support")
+# TODO 1: Initialize the app and create clients
 app = BedrockAgentCoreApp()
 os.environ["BYPASS_TOOL_CONSENT"] = "true"
 
@@ -55,11 +56,17 @@ GATEWAY_URL = os.getenv("GATEWAY_URL", settings.get("GATEWAY_URL", ""))
 KB_ID = os.getenv("KB_ID", settings.get("KB_ID", ""))
 MEMORY_ID = os.getenv("MEMORY_ID", settings.get("MEMORY_ID", ""))
 model_id = os.getenv("MODEL_ID", "global.amazon.nova-2-lite-v1:0")
+
+# TODO 2: Initialize model and clients
 model = BedrockModel(model_id=model_id, region_name=REGION, temperature=0.1)
 memory_client = MemoryClient(region_name=REGION)
 _bedrock_runtime = boto3.client("bedrock-agent-runtime", region_name=REGION)
 
+# TODO 3: Initialize Gateway client
+gateway_client = MCPClient(lambda: streamable_http_client(GATEWAY_URL))
 
+
+# TODO 4: Implement the namespace helper
 def get_namespaces(mem_client: MemoryClient, memory_id: str) -> dict:
     """Read the strategy namespace templates, including the legacy SDK field."""
     namespaces = {}
@@ -117,9 +124,12 @@ def verified_response(messages: list) -> str:
                     return "Discount calculation:\n" + validated.model_dump_json(indent=2)
                 except ValidationError:
                     return "Discount calculation:\n" + json.dumps(calculation, indent=2)
-            if name == "search_knowledge_base" and text in (
-                "Knowledge base not configured.",
-                "No relevant information was found in the knowledge base.",
+            if name == "search_knowledge_base" and (
+                "not configured" in text.lower()
+                or text in (
+                    "Knowledge base not configured.",
+                    "No relevant information was found in the knowledge base.",
+                )
             ):
                 return (
                     text
@@ -144,6 +154,7 @@ def prepare_browser_driver():
         os.environ["PLAYWRIGHT_NODEJS_PATH"] = str(destination)
 
 
+# TODO 5: Implement the MemoryHook class
 class MemoryHook(HookProvider):
     """Retrieve customer context before a turn and persist the completed exchange."""
 
@@ -224,6 +235,7 @@ class MemoryHook(HookProvider):
         registry.add_callback(AfterInvocationEvent, self.save_support_interaction)
 
 
+# TODO 6: Implement the Knowledge Base search tool
 @tool
 def search_knowledge_base(query: str) -> str:
     """Retrieve catalog facts, return policies, warranties and loyalty benefits.
@@ -234,8 +246,11 @@ def search_knowledge_base(query: str) -> str:
     Args:
         query: Product or support policy question to search for.
     """
-    if not KB_ID:
-        return "Knowledge base not configured."
+    if not KB_ID or not KB_ID.strip():
+        return (
+            "Knowledge Base is not configured: KB_ID is empty or missing. "
+            "Please configure KB_ID before attempting a knowledge-base search."
+        )
     response = _bedrock_runtime.retrieve(
         knowledgeBaseId=KB_ID, retrievalQuery={"text": query}
     )
@@ -250,6 +265,7 @@ def search_knowledge_base(query: str) -> str:
     )
 
 
+# TODO 7: Implement the loyalty discount calculator
 @tool
 def calculate_loyalty_discount(
     loyalty_points: int,
@@ -368,6 +384,7 @@ Never fabricate tool outputs or claim an action succeeded if the underlying tool
 For customer recall, utilize the injected Customer Context."""
 
 
+# TODO 8: Implement the agent entrypoint
 @app.entrypoint
 async def invoke(payload, context=None):
     """Handle one customer turn; identifiers keep long-term memory customer-scoped."""
@@ -400,25 +417,34 @@ async def invoke(payload, context=None):
         ]
         if GATEWAY_URL:
             try:
-                with MCPClient(lambda: streamable_http_client(GATEWAY_URL)) as gateway:
-                    tools.extend(gateway.list_tools_sync())
-                    agent = Agent(
-                        model=model,
-                        tools=tools,
-                        hooks=hooks,
-                        system_prompt=SYSTEM_PROMPT + "\nCurrent customer: " + actor_id,
-                    )
-                    result = await agent.invoke_async(payload["prompt"])
-                    response = verified_response(agent.messages)
-                    result.message["content"] = [{"text": response}]
-                    return {
-                        "response": response,
-                        "customer_id": actor_id,
-                        "session_id": session_id,
-                        "messages": agent.messages,
-                    }
+                with gateway_client:
+                    try:
+                        gateway_tools = gateway_client.list_tools_sync()
+                        tools.extend(gateway_tools)
+
+                        logger.info(
+                            "Gateway connected successfully. Loaded %d tools.",
+                            len(gateway_tools),
+                        )
+
+                    except TimeoutError:
+                        logger.exception("Gateway tool loading timed out")
+
+                    except ConnectionError:
+                        logger.exception("Gateway connection failed")
+
+                    except Exception as exc:
+                        logger.exception(
+                            "Gateway tool loading failed: %s", exc
+                        )
+            except TimeoutError:
+                logger.exception("Gateway tool loading timed out")
+            except ConnectionError:
+                logger.exception("Gateway connection failed")
             except Exception as exc:
-                logger.warning("Gateway tools unavailable, continuing with local tools: %s", exc)
+                logger.exception(
+                    "Gateway tool loading failed: %s", exc
+                )
 
         agent = Agent(
             model=model,
