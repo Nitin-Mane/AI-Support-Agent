@@ -36,7 +36,7 @@ Session state and customer memory persistence should not block the real-time int
 In distributed cloud architectures, individual tool endpoints (such as Gateway MCP servers or OpenSearch vector clusters) may experience intermittent timeouts, network partition, or cold starts.
 
 ### Engineering Resolution
-- **Gateway MCP Fallback**: If the Gateway MCP endpoint is unreachable, the agent catches the connection error, logs a warning, and initializes the Strands Agent with the remaining local tools (Knowledge Base, Code Interpreter, Browser).
+- **Gateway MCP failures**: The Gateway transport stays open until the agent turn completes. Connection and tool-discovery failures are logged with `logger.exception`; the entrypoint returns `GATEWAY_UNAVAILABLE` and tells the customer to retry. It also identifies endpoint, target status and runtime logs as administrator checks. An empty tool list follows the same failure path. The agent is not started after a configured Gateway fails to load.
 - **Knowledge Base Factuality**: When vector search returns empty results or the knowledge base is unconfigured, the tool explicitly states that the catalog cannot be verified rather than allowing the model to hallucinate warranty or return policies.
 
 ---

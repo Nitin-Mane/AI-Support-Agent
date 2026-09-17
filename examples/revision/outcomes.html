@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="en"><meta charset="utf-8"><title>Reviewer correction verification</title><style>
+body{background:#f4f6f8;margin:24px;color:#182b43;font:16px/1.5 "Segoe UI",sans-serif}
+main{background:white;width:1080px;max-width:100%;border:1px solid #d2dbe6;border-radius:10px;padding:28px 32px;box-sizing:border-box}
+h1{font-size:26px;margin:0 0 12px}h2{font-size:16px;margin:18px 0 6px;color:#17614a}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.5 Consolas,monospace;background:#f1f5fa;border-left:3px solid #386aa3;padding:12px;margin:0}
+footer,p{font-size:12px;color:#586b82}footer{border-top:1px solid #d2dbe6;margin-top:18px;padding-top:12px;overflow-wrap:anywhere}
+</style><main><h1>Udacity reviewer corrections - local verification</h1><p>Checked UTC: 2026-09-17T17:34:10.032658+00:00<br>Scope: Local execution of corrected main.py; no cloud deployment</p><pre>33 passed, 1 warning in 2.47s</pre><h2>Missing Kb - PASS</h2><pre>Knowledge Base is not configured: KB_ID is empty or missing. Please configure KB_ID before attempting a knowledge-base search.</pre><h2>Empty Kb - PASS</h2><pre>Knowledge Base is not configured: KB_ID is empty or missing. Please configure KB_ID before attempting a knowledge-base search.</pre><h2>Whitespace Kb - PASS</h2><pre>Knowledge Base is not configured: KB_ID is empty or missing. Please configure KB_ID before attempting a knowledge-base search.</pre><h2>Invalid Gateway - PASS</h2><pre>{
+  &quot;error_code&quot;: &quot;GATEWAY_UNAVAILABLE&quot;,
+  &quot;error&quot;: &quot;The support Gateway is unavailable, so this request could not be completed. Please retry shortly. If the problem persists, ask the administrator to check the Gateway endpoint, target status and runtime logs.&quot;,
+  &quot;session_id&quot;: &quot;review-invalid-gateway&quot;
+}</pre><footer>Source: examples/revision/failure_checks.json and pytest.txt<br>main.py SHA-256: 4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a<br>The invalid Gateway case uses a real MCPClient against a closed localhost port.<br>These are intentional failure checks. A fresh cloud deployment and Udacity re-review are pending.</footer></main></html>

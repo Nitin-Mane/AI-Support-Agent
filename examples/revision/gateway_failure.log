@@ -1,0 +1,247 @@
+client failed to initialize
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\strands\tools\mcp\mcp_client.py", line 462, in start
+  |     self._init_future.result(timeout=self._startup_timeout)
+  |     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\mniti\anaconda3\Lib\concurrent\futures\_base.py", line 456, in result
+  |     return self.__get_result()
+  |            ~~~~~~~~~~~~~~~~~^^
+  |   File "C:\Users\mniti\anaconda3\Lib\concurrent\futures\_base.py", line 401, in __get_result
+  |     raise self._exception
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\strands\tools\mcp\mcp_client.py", line 1471, in _async_background_thread
+  |     async with self._transport_callable() as (read_stream, write_stream, *_):
+  |                ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 688, in streamable_http_client
+  |     anyio.create_task_group() as tg,
+  |     ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 98, in map_httpcore_exceptions
+    |     yield
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 388, in handle_async_request
+    |     resp = await self._pool.handle_async_request(req)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection_pool.py", line 242, in handle_async_request
+    |     raise exc from None
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection_pool.py", line 224, in handle_async_request
+    |     response = await connection.handle_async_request(pool_request.request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 94, in handle_async_request
+    |     raise exc
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 74, in handle_async_request
+    |     stream = await self._connect(request)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 117, in _connect
+    |     stream = await self._network_backend.connect_tcp(**kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_backends\auto.py", line 31, in connect_tcp
+    |     return await self._backend.connect_tcp(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_backends\anyio.py", line 115, in connect_tcp
+    |     with map_exceptions(exc_map):
+    |          ~~~~~~~~~~~~~~^^^^^^^^^
+    |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_exceptions.py", line 17, in map_exceptions
+    |     raise to_exc(exc) from exc
+    | httpcore2.ConnectError: All connection attempts failed
+    |
+    | The above exception was the direct cause of the following exception:
+    |
+    | Traceback (most recent call last):
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\anyio\_core\_tasks.py", line 327, in _run_coro
+    |     retval = await self._coro
+    |              ^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 308, in _run_request_post
+    |     await post_fn()
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 589, in handle_request_async
+    |     await self._handle_post_request(ctx)
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 323, in _handle_post_request
+    |     async with ctx.client.stream(
+    |                ~~~~~~~~~~~~~~~~~^
+    |         "POST",
+    |         ^^^^^^^
+    |     ...<2 lines>...
+    |         headers=headers,
+    |         ^^^^^^^^^^^^^^^^
+    |     ) as response:
+    |     ^
+    |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 214, in __aenter__
+    |     return await anext(self.gen)
+    |            ^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1678, in stream
+    |     response = await self.send(
+    |                ^^^^^^^^^^^^^^^^
+    |     ...<4 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1818, in send
+    |     response = await self._send_handling_auth(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<4 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1846, in _send_handling_auth
+    |     response = await self._send_handling_redirects(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1881, in _send_handling_redirects
+    |     response = await self._send_single_request(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1915, in _send_single_request
+    |     response = await transport.handle_async_request(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 387, in handle_async_request
+    |     with map_httpcore_exceptions():
+    |          ~~~~~~~~~~~~~~~~~~~~~~~^^
+    |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 115, in map_httpcore_exceptions
+    |     raise mapped_exc(message) from exc
+    | httpx2.ConnectError: All connection attempts failed
+    +------------------------------------
+Gateway tool loading failed
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\strands\tools\mcp\mcp_client.py", line 462, in start
+  |     self._init_future.result(timeout=self._startup_timeout)
+  |     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "C:\Users\mniti\anaconda3\Lib\concurrent\futures\_base.py", line 456, in result
+  |     return self.__get_result()
+  |            ~~~~~~~~~~~~~~~~~^^
+  |   File "C:\Users\mniti\anaconda3\Lib\concurrent\futures\_base.py", line 401, in __get_result
+  |     raise self._exception
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\strands\tools\mcp\mcp_client.py", line 1471, in _async_background_thread
+  |     async with self._transport_callable() as (read_stream, write_stream, *_):
+  |                ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 688, in streamable_http_client
+  |     anyio.create_task_group() as tg,
+  |     ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 98, in map_httpcore_exceptions
+    |     yield
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 388, in handle_async_request
+    |     resp = await self._pool.handle_async_request(req)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection_pool.py", line 242, in handle_async_request
+    |     raise exc from None
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection_pool.py", line 224, in handle_async_request
+    |     response = await connection.handle_async_request(pool_request.request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 94, in handle_async_request
+    |     raise exc
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 74, in handle_async_request
+    |     stream = await self._connect(request)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 117, in _connect
+    |     stream = await self._network_backend.connect_tcp(**kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_backends\auto.py", line 31, in connect_tcp
+    |     return await self._backend.connect_tcp(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_backends\anyio.py", line 115, in connect_tcp
+    |     with map_exceptions(exc_map):
+    |          ~~~~~~~~~~~~~~^^^^^^^^^
+    |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpcore2\_exceptions.py", line 17, in map_exceptions
+    |     raise to_exc(exc) from exc
+    | httpcore2.ConnectError: All connection attempts failed
+    |
+    | The above exception was the direct cause of the following exception:
+    |
+    | Traceback (most recent call last):
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\anyio\_core\_tasks.py", line 327, in _run_coro
+    |     retval = await self._coro
+    |              ^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 308, in _run_request_post
+    |     await post_fn()
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 589, in handle_request_async
+    |     await self._handle_post_request(ctx)
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\mcp\client\streamable_http.py", line 323, in _handle_post_request
+    |     async with ctx.client.stream(
+    |                ~~~~~~~~~~~~~~~~~^
+    |         "POST",
+    |         ^^^^^^^
+    |     ...<2 lines>...
+    |         headers=headers,
+    |         ^^^^^^^^^^^^^^^^
+    |     ) as response:
+    |     ^
+    |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 214, in __aenter__
+    |     return await anext(self.gen)
+    |            ^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1678, in stream
+    |     response = await self.send(
+    |                ^^^^^^^^^^^^^^^^
+    |     ...<4 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1818, in send
+    |     response = await self._send_handling_auth(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<4 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1846, in _send_handling_auth
+    |     response = await self._send_handling_redirects(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1881, in _send_handling_redirects
+    |     response = await self._send_single_request(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_client.py", line 1915, in _send_single_request
+    |     response = await transport.handle_async_request(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 387, in handle_async_request
+    |     with map_httpcore_exceptions():
+    |          ~~~~~~~~~~~~~~~~~~~~~~~^^
+    |   File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\httpx2\_transports\default.py", line 115, in map_httpcore_exceptions
+    |     raise mapped_exc(message) from exc
+    | httpx2.ConnectError: All connection attempts failed
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\AWS_Udacity\project_assignment_02\main.py", line 423, in invoke
+    connections.enter_context(gateway_client)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\mniti\anaconda3\Lib\contextlib.py", line 530, in enter_context
+    result = _enter(cm)
+  File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\strands\tools\mcp\mcp_client.py", line 425, in __enter__
+    return self.start()
+           ~~~~~~~~~~^^
+  File "D:\AWS_Udacity\project_assignment_02\.venv\Lib\site-packages\strands\tools\mcp\mcp_client.py", line 475, in start
+    raise MCPClientInitializationError(f"the client initialization failed: {e}") from e
+strands.types.exceptions.MCPClientInitializationError: the client initialization failed: unhandled errors in a TaskGroup (1 sub-exception)

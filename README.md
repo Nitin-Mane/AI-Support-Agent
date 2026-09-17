@@ -1,5 +1,12 @@
 # AI Support Agent
 
+September 17 reviewer corrections are documented in [REVISION_NOTES.md](REVISION_NOTES.md).
+The revised source passes 33 local tests, including a real failed MCP connection.
+The scenario records below are historical evidence. The revised source has not
+yet been deployed or reviewed by Udacity. Test 3 was run against a real Knowledge
+Base in the personal AWS account; its recorded ARN identifies that KB, rather
+than an AgentCore Runtime. AWS sign-in must be restored for fresh deployment tests.
+
 A cloud-native customer support platform built with the **Strands SDK** and **Amazon Bedrock AgentCore Runtime**, orchestrated with **Amazon Nova 2 Lite**. The agent integrates real-time order tracking, transactional refund processing via Model Context Protocol (MCP) Gateway microservices, semantic knowledge base retrieval (RAG) over Amazon OpenSearch Serverless, long-term cross-session memory, deterministic financial code execution, and headless browser automation.
 
 ---
@@ -18,7 +25,7 @@ flowchart TD
     end
 
     subgraph ToolEcosystem["Federated Tool Integrations"]
-        Agent -->|"MCP SSE Protocol"| Gateway["AgentCore Gateway"]
+        Agent -->|"MCP Streamable HTTP"| Gateway["AgentCore Gateway"]
         Gateway -->|"REST /api/orders"| LambdaOrder["Order Tracker Lambda"]
         Gateway -->|"Direct Tool Lambda"| LambdaRefund["Refund Processor Lambda"]
 
@@ -50,7 +57,9 @@ Detailed architectural specifications, sequencing diagrams, and interface contra
 
 ## Execution Panels & Test Showcase
 
-Below are outcome panels captured directly from verified agent executions across all six core capability domains.
+Below are panels displaying saved test results across the six capability domains.
+The original trace files in `examples/traces/` identify the run dates and account
+ARNs. These panels do not represent fresh executions of the September 17 revision.
 
 ### 1. Order Tracking
 - **Objective**: Retrieve status and carrier tracking for order `ORD-001`.
@@ -124,13 +133,13 @@ Below are outcome panels captured directly from verified agent executions across
 ├── docs/
 │   ├── architecture.md         # Detailed system design, data flow, and component specifications
 │   ├── design_decisions.md     # Engineering decisions, arithmetic boundary isolation, and security
-│   └── images/                 # Verified outcome panel screenshots
+│   └── images/                 # Saved outcome panel screenshots
 ├── lambda/
 │   ├── order_tracker.py        # REST API Lambda handling order queries
 │   ├── refund_processor.py     # MCP tool Lambda processing refunds and return labels
 │   └── lambda_schema           # Tool definition schemas for refund Lambda
 ├── tests/
-│   └── test_agent.py           # Comprehensive local behavior test suite (19 test cases)
+│   └── test_agent.py           # Existing local behavior tests
 ├── examples/
 │   └── traces/                 # Verbatim execution JSON and text conversation traces
 └── scripts/
@@ -162,22 +171,28 @@ pip install pytest anyio
 ```
 
 ### Running the Test Suite
-The repository includes a comprehensive 19-case unit and integration test suite covering discount arithmetic, boundary limits, memory hook event propagation, Knowledge Base chunk joining, verified response enforcement, and entrypoint input validation:
+The repository includes 33 local tests covering discount arithmetic, memory hooks,
+Knowledge Base configuration guards, response enforcement, entrypoint validation,
+Gateway failures and connection lifetime. Cloud services are replaced with test
+doubles in this suite. The separate failure-check script also exercises a real
+MCP connection against a deliberately closed localhost port.
 
 ```bash
 pytest tests/
 ```
 
-Test Results:
+Measured result (full output in [examples/revision/pytest.txt](examples/revision/pytest.txt)):
 ```text
-============================= test session starts =============================
-platform win32 -- Python 3.13.9, pytest-9.1.1, pluggy-1.6.0
-collected 19 items
-
-tests/test_agent.py ...................                                  [100%]
-
-======================= 19 passed, 1 warning in 10.63s ========================
+33 passed, 1 dependency deprecation warning
 ```
+
+Run the actual connection failure checks with:
+
+```bash
+python scripts/verify_review_failures.py
+```
+
+![Reviewer correction outcomes](examples/revision/corrections_outcome.jpg)
 
 ---
 
@@ -185,7 +200,7 @@ tests/test_agent.py ...................                                  [100%]
 
 - **Deterministic Financial Arithmetic**: Financial loyalty calculations are strictly executed in an isolated Python Code Interpreter sandbox rather than letting the LLM compute totals, preventing multi-step rounding errors.
 - **Defensive Memory Hooks**: Memory retrieval occurs prior to model invocation (`MessageAddedEvent`), while persistence (`AfterInvocationEvent`) is non-blocking to prevent memory service latency from degrading response time.
-- **Resilient Microservice Federation**: If Gateway MCP microservices are unreachable, the agent catches the connection failure and continues operating with remaining local tools rather than terminating abruptly.
+- **Gateway failure handling**: The transport remains open throughout the agent turn. If connection or discovery fails, or no tools are returned, the request stops with a useful retry message and diagnostic server logging.
 
 For deeper technical analysis, refer to [docs/design_decisions.md](docs/design_decisions.md) and the [Engineering Reflection](REFLECTION.md).
 

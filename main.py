@@ -14,6 +14,7 @@ import shutil
 import sys
 import tempfile
 import uuid
+from contextlib import ExitStack
 from decimal import Decimal, ROUND_DOWN, ROUND_HALF_UP
 from pathlib import Path
 
@@ -415,52 +416,52 @@ async def invoke(payload, context=None):
             calculate_loyalty_discount,
             agent_core_browser.browser,
         ]
-        if GATEWAY_URL:
-            try:
-                with gateway_client:
-                    try:
-                        gateway_tools = gateway_client.list_tools_sync()
-                        tools.extend(gateway_tools)
-
-                        logger.info(
-                            "Gateway connected successfully. Loaded %d tools.",
-                            len(gateway_tools),
-                        )
-
-                    except TimeoutError:
+        # MCP tools need their transport to stay open throughout the agent turn.
+        with ExitStack() as connections:
+            if GATEWAY_URL:
+                try:
+                    connections.enter_context(gateway_client)
+                    gateway_tools = gateway_client.list_tools_sync()
+                    if not gateway_tools:
+                        raise RuntimeError("Gateway returned no tools")
+                    tools.extend(gateway_tools)
+                    logger.info(
+                        "Gateway connected successfully. Loaded %d tools.",
+                        len(gateway_tools),
+                    )
+                except Exception as exc:
+                    if isinstance(exc, TimeoutError):
                         logger.exception("Gateway tool loading timed out")
-
-                    except ConnectionError:
+                    elif isinstance(exc, ConnectionError):
                         logger.exception("Gateway connection failed")
+                    else:
+                        logger.exception("Gateway tool loading failed")
+                    return {
+                        "error_code": "GATEWAY_UNAVAILABLE",
+                        "error": (
+                            "The support Gateway is unavailable, so this request "
+                            "could not be completed. Please retry shortly. If the "
+                            "problem persists, ask the administrator to check the "
+                            "Gateway endpoint, target status and runtime logs."
+                        ),
+                        "session_id": session_id,
+                    }
 
-                    except Exception as exc:
-                        logger.exception(
-                            "Gateway tool loading failed: %s", exc
-                        )
-            except TimeoutError:
-                logger.exception("Gateway tool loading timed out")
-            except ConnectionError:
-                logger.exception("Gateway connection failed")
-            except Exception as exc:
-                logger.exception(
-                    "Gateway tool loading failed: %s", exc
-                )
-
-        agent = Agent(
-            model=model,
-            tools=tools,
-            hooks=hooks,
-            system_prompt=SYSTEM_PROMPT + "\nCurrent customer: " + actor_id,
-        )
-        result = await agent.invoke_async(payload["prompt"])
-        response = verified_response(agent.messages)
-        result.message["content"] = [{"text": response}]
-        return {
-            "response": response,
-            "customer_id": actor_id,
-            "session_id": session_id,
-            "messages": agent.messages,
-        }
+            agent = Agent(
+                model=model,
+                tools=tools,
+                hooks=hooks,
+                system_prompt=SYSTEM_PROMPT + "\nCurrent customer: " + actor_id,
+            )
+            result = await agent.invoke_async(payload["prompt"])
+            response = verified_response(agent.messages)
+            result.message["content"] = [{"text": response}]
+            return {
+                "response": response,
+                "customer_id": actor_id,
+                "session_id": session_id,
+                "messages": agent.messages,
+            }
     except Exception:
         logger.exception("Support request failed: session=%s", session_id)
         return {

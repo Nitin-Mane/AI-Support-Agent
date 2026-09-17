@@ -45,6 +45,19 @@ def audit_traces() -> dict:
     # 2. Refund processing
     refund = load_record("02_refund_processing")
     results = tool_results(refund)
+    gateway_results = [(name, result) for name, result in results if "___" in name]
+    gateway_valid = all(
+        result.get("status") == "success"
+        and not result.get("isError")
+        and bool(result.get("content"))
+        and any(block.get("text") or block.get("json") for block in result["content"])
+        for _, result in gateway_results
+    )
+    checks["gateway_tool_responses"] = (
+        gateway_valid
+        and any(name == "order-tracker___get_order" for name, _ in gateway_results)
+        and any(name == "refund-processor___initiate_refund" for name, _ in gateway_results)
+    )
     checks["refund_processing"] = (
         any(name == "refund-processor___initiate_refund" and result.get("status") == "success" for name, result in results)
         and "APPROVED" in json.dumps(refund)
@@ -94,9 +107,12 @@ def audit_traces() -> dict:
 
     report = {
         "status": "PASS" if all(checks.values()) else "FAIL",
-        "scenarios_passed": sum(checks.values()),
-        "total_scenarios": len(checks),
+        "scenarios_passed": sum(value for key, value in checks.items() if key != "gateway_tool_responses"),
+        "total_scenarios": 6,
         "details": checks,
+        "scope": "Validation of saved trace files; not a fresh deployment test of current main.py",
+        "rag_source_arn": rag.get("runtime_arn"),
+        "rag_record_identifies_agentcore_runtime": ":bedrock-agentcore:" in rag.get("runtime_arn", ""),
     }
     print(json.dumps(report, indent=2))
     return report

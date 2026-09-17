@@ -1,0 +1,27 @@
+{
+  "checked_utc": "2026-09-17T17:34:10.032658+00:00",
+  "scope": "Local execution of corrected main.py; no cloud deployment",
+  "main_sha256": "4b20e256bc1c3e9ebc5192534b8fe3013e540652cdbb9229c4f805fb3977711a",
+  "cases": {
+    "missing_kb": {
+      "passed": true,
+      "response": "Knowledge Base is not configured: KB_ID is empty or missing. Please configure KB_ID before attempting a knowledge-base search."
+    },
+    "empty_kb": {
+      "passed": true,
+      "response": "Knowledge Base is not configured: KB_ID is empty or missing. Please configure KB_ID before attempting a knowledge-base search."
+    },
+    "whitespace_kb": {
+      "passed": true,
+      "response": "Knowledge Base is not configured: KB_ID is empty or missing. Please configure KB_ID before attempting a knowledge-base search."
+    },
+    "invalid_gateway": {
+      "passed": true,
+      "response": {
+        "error_code": "GATEWAY_UNAVAILABLE",
+        "error": "The support Gateway is unavailable, so this request could not be completed. Please retry shortly. If the problem persists, ask the administrator to check the Gateway endpoint, target status and runtime logs.",
+        "session_id": "review-invalid-gateway"
+      }
+    }
+  }
+}
