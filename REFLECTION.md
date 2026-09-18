@@ -1,10 +1,31 @@
 # Engineering Reflection
 
-## 1. Design Decision
-A key architectural decision was to isolate loyalty point calculations completely outside the foundation model. Instead of relying on model reasoning for arithmetic, the discount tool generates a self-contained Python program and executes it inside an isolated code sandbox using the `Decimal` module with strict `ROUND_HALF_UP` rounding. Points are redeemed in 500-point increments, capped at 50% of the total order value, with the customer tier discount applied to the remaining subtotal. The response handler preserves the tool's verified structured output so the model cannot silently recalculate or alter numbers. When the sandbox is unreachable, the system explicitly returns a tier-only estimate and leaves customer points untouched.
+## Design decision
 
-## 2. Challenge Encountered
-Live testing revealed a significant failure mode that local unit tests did not initially capture. For a Gold customer with 4,250 points purchasing a $150 order, the backend calculator computed the correct final total of $99.00. However, the model's natural language summary synthesized a $95.00 total because it calculated the 10% tier discount against the original $150 base rather than the $110 post-redemption balance. The conversation trace made the discrepancy clear: the tool was accurate, but the model's text generation suffered from arithmetic drift. I implemented a response validation interceptor that inspects tool execution trajectories and enforces the tool's verified JSON payload in the final response.
+Loyalty discounts need consistent arithmetic. The discount tool runs a complete
+Python calculation in AgentCore Code Interpreter, using Decimal and explicit
+rounding. It redeems points in 500-point blocks, limits redemption to half the
+order value, and applies the tier discount to the remaining subtotal. The final
+reply keeps the tool's structured result so customers receive the same figures
+that the calculation produced. If Code Interpreter is unavailable, the fallback
+provides a tier-only estimate and does not redeem points.
 
-## 3. Production Consideration
-For a production deployment, the primary consideration would be enforcing strict authentication, authorization, and idempotency boundaries. The Gateway endpoints should require verified JWT bearer tokens so customer identity is derived directly from the authenticated session rather than unvalidated payload arguments. Furthermore, all refund actions must be idempotent to ensure duplicate customer requests or network retries never trigger multiple financial transactions. In addition, persistent memory requires granular data retention schedules and deletion controls to comply with data privacy standards.
+## Challenge
+
+One live test exposed a mismatch between the calculation and the reply. For a
+Gold customer with 4,250 points and a $150 order, the tool returned $99, but the
+model described a $95 total. It had applied the 10% discount to the original
+order value instead of the $110 balance after point redemption. Checking the
+tool conversation made the cause clear. Response validation now preserves the
+calculator's JSON fields in the final answer. This showed why checking only the
+tool result was insufficient: the customer-facing response also needed testing.
+
+## Production consideration
+
+Refunds need authenticated customer identity and protection against duplicate
+requests. A production Gateway should validate bearer tokens, derive customer
+identity from the authenticated session, and check that the customer owns the
+order. Refund processing should accept an idempotency key so retries cannot
+issue the same refund twice. Customer memory also needs a retention period and
+a deletion process. These controls should be tested alongside the normal support
+flows before connecting the assistant to real customer accounts.

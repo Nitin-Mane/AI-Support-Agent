@@ -1,8 +1,0 @@
-{
-  "checked_utc": "2026-09-17T17:55:08.166238+00:00",
-  "account": "090165623118",
-  "operation": "aoss:CreateSecurityPolicy",
-  "status": "BLOCKED",
-  "error_code": "AccessDeniedException",
-  "message": "User: arn:aws:sts::090165623118:assumed-role/voclabs/user3218979=11627499705 is not authorized to perform: aoss:CreateSecurityPolicy on resource: aoss:collection/udacity-p02-rev2-kb because no identity-based policy allows the aoss:CreateSecurityPolicy action"
-}
